@@ -10,12 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "matter-js": "^0.14.2",
     "react": "16.9.0",
     "react-native": "0.61.2",
-    "react-navigation": "^3.0.9",
-    "react-native-gesture-handler": "^1.0.12",
     "react-native-game-engine": "^0.10.1",
-    "matter-js": "^0.14.2"
+    "react-native-gesture-handler": "^1.4.1",
+    "react-navigation": "^3.13.0",
+    "react-navigation-stack": "^1.10.2"
   },
   "devDependencies": {
     "@babel/core": "7.6.3",
