@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 //import screens here
 import HomeScreen from './src/screens/Home.js';
