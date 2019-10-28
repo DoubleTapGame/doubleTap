@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 import Root from "./Root.js";
 
-export default class BasicApp extends Component {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
