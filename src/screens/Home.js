@@ -15,18 +15,14 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.ViewContainer}>
-        <Text style={styles.TextContainer}>Double{"\n"}  Tap</Text>
-
-          
+        <Text style={styles.TextContainer}>Double{"\n"}Tap</Text>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('GameSetup')}>
               <View style={styles.ButtonBox}>
-                <View >
+                <View>
                   <Text style={styles.CustomButton}>Play!</Text>
                 </View>
               </View>
             </TouchableHighlight>
-        
-          
       </View>
     );
   }
@@ -48,7 +44,7 @@ const styles = StyleSheet.create(
       //fontFamily: Bangers,
       fontSize: 90,
       fontFamily: 'Futura-Medium',
-      
+      textAlign:'center',
     },
     ButtonBox:
     {
