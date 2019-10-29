@@ -1,30 +1,55 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 
 class ReadyUp extends React.Component {
-    render() {
+  
+  static navigationOptions = {
+    header: null,
+  };
+    
+  render() {
       return (
-        <>
-        <View>
-          <Text style={{justifyContent: 'center'}}>Ready Up Screen</Text>
+        <View style={{flex: 1}}>
+          <TouchableHighlight style={{flex: 1}} onPress={() => this.props.navigation.navigate('GameSetup')}>
+            <View style={styles.player2Field}>
+              <Text style={styles.gameTitle}>Rapid Tap!</Text>
+              <Text style={styles.playerName}>Player 2:{"\n"}Tap to ready up</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight style={{flex: 1}} onPress={() => this.props.navigation.navigate('GameSetup')}>
+            <View style={styles.player1Field}>
+              <Text style={styles.gameTitle}>Rapid Tap!</Text>
+              <Text style={styles.playerName}>Player 1:{"\n"}Tap to ready up</Text>
+            </View>
+          </TouchableHighlight>
         </View>
-        <View style ={{flex: 1}}>
-          <View style={{flex: 1, backgroundColor: 'powderblue'}}>
-            <Text style = {styles.textRotate}>Player 1</Text>
-          </View>
-          <View style={{flex: 1, backgroundColor: 'skyblue'}} >
-            <Text>Player 2</Text>
-          </View>
-        </View>
-        </>
       );
     }
 }
 
 const styles = StyleSheet.create ({
-    textRotate:{
-    transform: [{ rotate: '180deg'}],
-    alignItems: 'center'
-    }
+    player2Field: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: 'cornflowerblue',
+      transform: [{ rotate: '180deg'}]
+    },
+    player1Field: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: 'crimson',
+    },
+    playerName: {
+      flex: 2,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      fontSize: 32,
+    },
+    gameTitle: {
+      flex: 1,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      fontSize: 52,
+    },
 })
 export default ReadyUp;
