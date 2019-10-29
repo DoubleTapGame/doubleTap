@@ -1,5 +1,6 @@
 //scoreboard
 import React, { Component } from 'react';
+// import fontFamily from '../../assets';
 import {
     AppRegistry,
     Platform,
@@ -23,12 +24,14 @@ export default class Scoreboard extends Component {
                     </Text>
                 </View>
                 <View style={styles.listContainer}>
-                    <View style={styles.listText}>
-                        <Text>This is where the list will go!</Text>
+                    <View>
+                        <Text style={styles.listText}>
+                            This is where the list will go!
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Text>Future Button</Text>
+                    <Text style={styles.buttonText}>Future Button</Text>
                 </View>
             </View>
         );
@@ -45,36 +48,44 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         height: 100,
-        width: 150,
+        width: 300,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 50,
-        backgroundColor: 'green',
+        // backgroundColor: 'green',
         
     },
     listContainer: {
-        // justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         height: 500,
-        width: 250,
-        backgroundColor: 'yellow',
+        width: 275,
+        backgroundColor: 'white',
     },
     buttonContainer: {
-        // justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: 100,
-        height: 50,
+        width: 200,
+        height: 60,
         marginBottom: 60,
-        backgroundColor: 'pink',
+        backgroundColor: 'white',
     },
     headerText: {
         color: 'white',
+        fontSize: 50,
+        fontFamily: 'Futura',
         // fontFamily: 'Bangers',
     },
     listText: {
-
         alignItems: 'center',
         color: 'black',
-    }
+        fontFamily: 'Futura',
+    },
+    buttonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: 'Futura',
+        color: 'black',
 
+    }
 })
