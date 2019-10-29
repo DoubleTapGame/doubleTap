@@ -6,20 +6,66 @@ class ReadyUp extends React.Component {
   static navigationOptions = {
     header: null,
   };
-    
+   
+  constructor(props) {
+    // calls parent class' constructor with `props` provided - i.e. uses Component to setup props
+    super(props);
+    // set initial state - e.g. text is shown
+    this.state = { player1ready: false, player2ready: false, showText: false };
+  }
+
+  toggle(number){
+    if(number === 1){
+      this.setState(prevState => {
+        return { player1ready: !prevState.player1ready };
+      });
+    }
+    else{
+      this.setState(prevState => {
+        return { player2ready: !prevState.player2ready };
+      });
+    }
+  }
+
+  showText(number){
+    if(number === 1 && this.state.player1ready){
+      return(
+      <View>
+        <Text>Ready!</Text>
+      </View>
+      )
+    }
+    if(number === 2 && this.state.player2ready){
+      return(
+      <View>
+        <Text>Ready!</Text>
+      </View>
+      )
+    }
+    else{
+      return(
+        <View>
+          <Text></Text>
+        </View>
+      )
+    }
+  }
+
   render() {
       return (
         <View style={{flex: 1}}>
-          <TouchableHighlight style={{flex: 1}} onPress={() => this.props.navigation.navigate('GameSetup')}>
+          <TouchableHighlight style={{flex: 1}} onPress={() => this.toggle(2)}>
             <View style={styles.player2Field}>
               <Text style={styles.gameTitle}>Rapid Tap!</Text>
               <Text style={styles.playerName}>Player 2:{"\n"}Tap to ready up</Text>
+              {this.showText(2)}
             </View>
           </TouchableHighlight>
-          <TouchableHighlight style={{flex: 1}} onPress={() => this.props.navigation.navigate('GameSetup')}>
+          <TouchableHighlight style={{flex: 1}} onPress={() => this.toggle(1)}>
             <View style={styles.player1Field}>
               <Text style={styles.gameTitle}>Rapid Tap!</Text>
               <Text style={styles.playerName}>Player 1:{"\n"}Tap to ready up</Text>
+              {this.showText(1)}
             </View>
           </TouchableHighlight>
         </View>
