@@ -8,19 +8,24 @@ import {
   TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback,
 } from 'react-native';
 
-export default class App extends Component {
+export default class Home extends Component {
+  static navigationOptions ={
+    header: null,
+  };
   render() {
     return (
       <View style={styles.ViewContainer}>
-        <Text style={styles.TextContainer}>Double Tap</Text>
+        <Text style={styles.TextContainer}>Double{"\n"}  Tap</Text>
 
-          <View style={styles.ButtonBox}>
-            <TouchableHighlight>
-              <View style={styles.CustomButton}>
-                <Text>Play!</Text>
+          
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('GameSetup')}>
+              <View style={styles.ButtonBox}>
+                <View >
+                  <Text style={styles.CustomButton}>Play!</Text>
+                </View>
               </View>
             </TouchableHighlight>
-        </View>
+        
           
       </View>
     );
@@ -41,6 +46,9 @@ const styles = StyleSheet.create(
       color: 'white',
       marginBottom: 200,
       //fontFamily: Bangers,
+      fontSize: 90,
+      fontFamily: 'Futura-Medium',
+      
     },
     ButtonBox:
     {
@@ -48,8 +56,13 @@ const styles = StyleSheet.create(
       justifyContent: 'space-between',
       paddingTop: 10,
       paddingBottom: 10,
-      paddingRight: 80,
-      paddingLeft: 80,
+      paddingRight: 150,
+      paddingLeft: 150,
+    },
+    CustomButton: 
+    {
+      fontSize: 30,
+      fontFamily: 'Futura',
     }
     
    
