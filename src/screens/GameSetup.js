@@ -7,7 +7,7 @@ import {
   Button,
   View,
 } from 'react-native';
-import OutputT from '../components/GameSetup/OutputT.js'
+import PlayerList from '../components/GameSetup/PlayerList.js'
 
 class GameSetup extends Component {
   static navigationOptions = {
@@ -26,7 +26,7 @@ class GameSetup extends Component {
           <Text style={styles.heading2}>
             Enter names below:
           </Text>
-          <OutputT />
+          <PlayerList />
         </View>
         <View style={styles.roundSelectBox}>
           <Text style={styles.heading2}>
@@ -40,7 +40,7 @@ class GameSetup extends Component {
           <Button 
             title="Play!"
             color="purple"
-            onPress={() => Alert.alert('Simple Button pressed')}
+            onPress={() => this.props.navigation.navigate('ReadyUp')}
           />
         </View>
       </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   roundSelectBox: {
     flex: 2,
-    backgroundColor: '#abc5cf',
+    backgroundColor: '#ffffff',
     margin: 20,
     marginVertical: 0,
   },
