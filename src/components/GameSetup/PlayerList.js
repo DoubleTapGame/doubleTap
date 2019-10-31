@@ -1,14 +1,3 @@
-// import React, { Component } from 'react';
-// import { Text } from 'react-native';
-
-// export default class OutputT extends Component {
-//     render(){
-//         return(
-//             <Text>"what"</Text>
-//         );
-//     }
-// }
-
 import React, { Component } from 'react';
 import { View, FlatList, StyleSheet, Text, TextInput } from 'react-native';
 
