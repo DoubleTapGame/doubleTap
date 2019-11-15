@@ -14,6 +14,23 @@ class GameSetup extends Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { name: 'hello'};
+  }
+  
+getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@name')
+    if(value !== null) {
+      return value
+    }
+  } catch(e) {
+    // error reading value
+  }
+  return 
+}
+
   render() {
     return (
       <View style={styles.container}>
@@ -33,10 +50,17 @@ class GameSetup extends Component {
             Players will play each other:
           </Text>
           <Text style={styles.heading3}>
-            Round Select Goes Here
+            {this.state.name}
           </Text>
         </View>
         <View style={styles.buttonBox}>
+          <Button 
+            title="update text"
+            color="blue"
+            onPress={() => this.getData().then(value => {
+              this.setState(prevState => ({name: value}))
+            })}
+          />
           <Button 
             title="Play!"
             color="purple"
