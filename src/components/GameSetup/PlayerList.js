@@ -14,12 +14,12 @@ export default class PlayerList extends Component {
     super(props);
     this.state = {
       nameList: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'],
-      name1: 'test'};
+      textInputData: ''};
   }
 
-  updateName = async () => {
+  saveName = async () => {
     try {
-      await AsyncStorage.setItem('@name', 'name')
+      await AsyncStorage.setItem('@name', this.state.textInputData)
     } catch (e) {
       // saving error
     }
@@ -45,7 +45,9 @@ export default class PlayerList extends Component {
               <TextInput
                 style = {styles.item}
                 placeholder = {this.state.nameList[item.key-1]}
-                onChangeText = {this.updateName}
+                onChangeText = {data => this.setState({ textInputData: data })}
+                value = {this.state.textInputData}
+                onEndEditing = {this.saveName}
                 >
               </TextInput>
             </View>

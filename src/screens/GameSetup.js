@@ -28,7 +28,7 @@ getData = async () => {
   } catch(e) {
     // error reading value
   }
-  return 
+  return
 }
 
   render() {
