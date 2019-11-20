@@ -1,6 +1,6 @@
 //GameSetup
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,13 +10,14 @@ import {
 import PlayerList from '../components/GameSetup/PlayerList.js'
 
 class GameSetup extends Component {
+    
   static navigationOptions = {
     header: null,
   };
 
   constructor(props) {
     super(props);
-    this.state = { name: 'hello'};
+    this.state = { name: ''};
   }
   
 getData = async () => {
@@ -31,6 +32,8 @@ getData = async () => {
   return 
 }
 
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -43,14 +46,14 @@ getData = async () => {
           <Text style={styles.heading2}>
             Enter names below:
           </Text>
-          <PlayerList />
+          <PlayerList/>
         </View>
         <View style={styles.roundSelectBox}>
           <Text style={styles.heading2}>
             Players will play each other:
           </Text>
           <Text style={styles.heading3}>
-            {this.state.name}
+            Hello
           </Text>
         </View>
         <View style={styles.buttonBox}>
@@ -59,6 +62,7 @@ getData = async () => {
             color="blue"
             onPress={() => this.getData().then(value => {
               this.setState(prevState => ({name: value}))
+              console.log(this.state.name);
             })}
           />
           <Button 

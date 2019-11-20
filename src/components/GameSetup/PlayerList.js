@@ -1,61 +1,75 @@
-import React, { Component } from 'react';
-import { View, FlatList, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button, SafeAreaView, SectionList } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
+
+var nameList=['Nida','Jordan'];
+
+function Item({title}){
+  return (
+    <View>
+      <Text>{title}</Text>
+    </View>
+  )
+}
 export default class PlayerList extends Component {
   
-  // componentDidMount(){
-  //   var i;
-  //   for (i=0;i<5;i++){
 
-  //   }
-  // }
   constructor(props) {
-    super(props);
-    this.state = {
-      nameList: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'],
-      name1: 'test'};
-  }
+    
+       super(props)
+    
+       this.state = {
+         Holder: ''
+       }
+    
+     }
+  AddItemsToArray=()=>{
 
-  updateName = async () => {
-    try {
-      await AsyncStorage.setItem('@name', 'name')
-    } catch (e) {
-      // saving error
-    }
+      //Adding Items To Array.
+      nameList.push(this.state.Holder.toString() );
+
+      // Showing the complete Array on Screen Using Alert.
+      // Alert.alert(nameList[0,1].name);
+      console.log(nameList.toString());
+
   }
+  
 
   render() {
+    
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={[
-            {key: '1', color: 'crimson'},
-            {key: '2', color: 'cornflowerblue'},
-            {key: '3', color: 'mediumseagreen'},
-            {key: '4', color: 'gold'},
-            {key: '5', color: 'hotpink'},
-            {key: '6', color: 'lightslategrey'},
-          ]}
-          renderItem={({item}) =>
-            <View style={styles.list}>
-              <View style={styles.numberBox} backgroundColor = {item.color}>
-                <Text style={styles.numberBoxText}>{item.key}</Text>
-              </View>
-              <TextInput
-                style = {styles.item}
-                placeholder = {this.state.nameList[item.key-1]}
-                onChangeText = {this.updateName}
-                >
-              </TextInput>
-            </View>
-          }
+      
+
+      <View>
+
+      <SafeAreaView style={styles.container}>
+      <SectionList
+        sections={[this.state.nameList]}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({item}) => <Item title={item}/>}
+        renderSectionHeader={({section: {title}})=> (
+          
+          <Text>{title}</Text>
+        )}
+            // <View style={styles.list}>
+              /* <View style={styles.numberBox} backgroundColor = {'blue'}> */
+                // <Text style={styles.numberBoxText}>{item.key}</Text>
+              /* </View> */
+              /* </View> */
         />
-      </View>
+        </SafeAreaView>
+        <TextInput 
+          placeholder="Enter name here"
+          onChangeText={TextinputValue => this.setState({Holder: TextinputValue})}
+          style={{textAlign: 'center', marginBottom: 6, height: 45}}
+          ></TextInput>
+          <Button title="Click here to add a name to the List" onPress ={this.AddItemsToArray}/>
+          </View>
+          
     );
   }
 }
-//{item.color}
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -82,5 +96,11 @@ const styles = StyleSheet.create({
     },
     list: {
       flexDirection: 'row',
+    },
+    MainContainer : {
+      flex: 1,
+      justifyContent: 'center',
+      margin: 15
     }
 });
+
