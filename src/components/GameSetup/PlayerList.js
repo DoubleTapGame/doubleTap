@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { red } from 'ansi-colors';
 
 
 function * addPlayers() {
@@ -68,24 +70,6 @@ export default class PlayerList extends Component {
     }
   }
 
-  getRemovePlayersButton() {
-    if(this.state.activePlayers.length > 2){
-      return (
-        <Button
-          title = 'Remove player'
-          // onPress={() => {
-          //   this.setState(prevState =>
-          //     ({activePlayers: prevState.activePlayers.concat(generator.next().value)}));
-          // }}
-          color='red'
-        />
-      )
-    }
-    else{
-      return null
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -105,13 +89,17 @@ export default class PlayerList extends Component {
                 onEndEditing = {this.saveName}
                 >
               </TextInput>
+              <TouchableHighlight>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}> x </Text>
+                </View>
+              </TouchableHighlight>
             </View>
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        <View style={styles.buttons}>
+        <View style={styles.addButton}>
           {this.getAddPlayersButton()}
-          {this.getRemovePlayersButton()}
         </View>
       </View>
     );
@@ -145,7 +133,20 @@ const styles = StyleSheet.create({
     list: {
       flexDirection: 'row',
     },
-    buttons: {
+    button: {
+      justifyContent: 'center',
+      alignContent: 'center',
+      backgroundColor: 'white',
+      height: 40,
+      width: 40,
+    },
+    buttonText: {
+      fontSize: 36,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      color: 'red',
+    },
+    addButton: {
       flexDirection: 'row',
       justifyContent: 'space-around'
     }
