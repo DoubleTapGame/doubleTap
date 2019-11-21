@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button, TouchableHighlight } from 'react-native';
+import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
@@ -13,8 +13,19 @@ function * addPlayers() {
     yield {color: 'cornflowerblue', name: 'Player 2'};
   }
 }
-
 const generator = addPlayers()
+
+function * changeColor() {
+  while(true){
+    yield 'mediumseagreen';
+    yield 'gold';
+    yield 'hotpink';
+    yield 'lightslategrey';
+    yield 'crimson';
+    yield 'cornflowerblue';
+  }
+}
+const colorGenerator = changeColor()
 
 export default class PlayerList extends Component {
   constructor(props) {
@@ -31,7 +42,7 @@ export default class PlayerList extends Component {
     ]})
   }
 
-  saveName = async () => {
+  saveNamesToLocal = async () => {
     try {
       console.log(this.state.activePlayers)
       await AsyncStorage.setItem('@activePlayers', JSON.stringify(this.state.activePlayers))
@@ -40,7 +51,7 @@ export default class PlayerList extends Component {
     }
   }
 
-  onUpdateItem = (i, text) => {
+  updateNames = (i, text) => {
     const list = this.state.activePlayers.map((item, j) => {
       if (j === i) {
         item.name = text
@@ -57,7 +68,7 @@ export default class PlayerList extends Component {
     return this.state.activePlayers.filter((item, j) => index !== j);
   };
 
-  getAddPlayersButton() {
+  showAddPlayersButton() {
     if(!this.state.maxPlayers){
       return (
         <Button
@@ -77,6 +88,18 @@ export default class PlayerList extends Component {
     }
   }
 
+  changePlayerColor(index){
+    const list = this.state.activePlayers.map((item, j) => {
+      if (j === index) {
+        item.color = colorGenerator.next().value
+        return item
+      } else {
+        return item;
+      }
+    });
+    return list
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -84,16 +107,20 @@ export default class PlayerList extends Component {
           data={this.state.activePlayers}
           renderItem={({item, index}) =>
             <View style={styles.list}>
-              <View style={styles.numberBox} backgroundColor = {item.color}>
-                <Text style={styles.numberBoxText}>{index+1}</Text>
-              </View>
+              <TouchableOpacity onPress={() => {this.setState({
+                activePlayers: this.changePlayerColor(index)})}
+              }>
+                <View style={styles.numberBox} backgroundColor = {item.color}>
+                  <Text style={styles.numberBoxText}>{index+1}</Text>
+                </View>
+              </TouchableOpacity>
               <TextInput
                 style = {styles.item}
                 onChangeText = {data => this.setState({
-                  activePlayers: this.onUpdateItem(index, data)
+                  activePlayers: this.updateNames(index, data)
                 })}
                 value = {this.state.activePlayers[index].name}
-                onEndEditing = {this.saveName}
+                onEndEditing = {this.saveNamesToLocal}
                 >
               </TextInput>
               <TouchableHighlight onPress={() => {
@@ -110,7 +137,7 @@ export default class PlayerList extends Component {
           keyExtractor={(item, index) => index.toString()}
         />
         <View style={styles.addButton}>
-          {this.getAddPlayersButton()}
+          {this.showAddPlayersButton()}
         </View>
       </View>
     );
