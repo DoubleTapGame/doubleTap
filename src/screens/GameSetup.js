@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import PlayerList from '../components/GameSetup/PlayerList.js'
+import AsyncStorage from '@react-native-community/async-storage'
 
 class GameSetup extends Component {
   static navigationOptions = {
@@ -21,7 +22,7 @@ class GameSetup extends Component {
   
 getData = async () => {
   try {
-    const value = await AsyncStorage.getItem('@name')
+    const value = await AsyncStorage.getItem('@activePlayers')
     if(value !== null) {
       return value
     }
@@ -54,13 +55,13 @@ getData = async () => {
           </Text>
         </View>
         <View style={styles.buttonBox}>
-          <Button 
+          {/* <Button 
             title="update text"
             color="blue"
             onPress={() => this.getData().then(value => {
               this.setState(prevState => ({name: value}))
             })}
-          />
+          /> */}
           <Button 
             title="Play!"
             color="purple"

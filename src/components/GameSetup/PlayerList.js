@@ -1,27 +1,67 @@
 import React, { Component } from 'react';
-import { View, FlatList, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default class PlayerList extends Component {
-  
-  // componentDidMount(){
-  //   var i;
-  //   for (i=0;i<5;i++){
 
-  //   }
-  // }
+function * addPlayers() {
+  yield {key: '3', color: 'mediumseagreen', name: 'Player 3'};
+  yield {key: '4', color: 'gold', name: 'Player 4'};
+  yield {key: '5', color: 'hotpink', name: 'Player 5'};
+  yield {key: '6', color: 'lightslategrey', name: 'Player 6'};
+  return;
+}
+
+const generator = addPlayers()
+
+export default class PlayerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameList: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'],
-      textInputData: ''};
+      activePlayers: [
+        {key: '1', color: 'crimson', name: 'Player 1'},
+        {key: '2', color: 'cornflowerblue', name: 'Player 2'},
+      ],
+      maxPlayers: false};
   }
 
   saveName = async () => {
     try {
-      await AsyncStorage.setItem('@name', this.state.textInputData)
+      console.log(this.state.activePlayers)
+      await AsyncStorage.setItem('@activePlayers', JSON.stringify(this.state.activePlayers))
     } catch (e) {
       // saving error
+    }
+  }
+
+  onUpdateItem = (i, text) => {
+    const list = this.state.activePlayers.map((item, j) => {
+      if (j === i) {
+        item.name = text
+        return item
+      } else {
+        return item;
+      }
+    });
+    return list
+  };
+
+  getAddPlayersButton() {
+    if(!this.state.maxPlayers){
+      return (
+        <Button
+          title = 'Add another player'
+          onPress={() => {
+            this.setState(prevState =>
+              ({activePlayers: prevState.activePlayers.concat(generator.next().value)}));
+            if(this.state.activePlayers.length === 5){
+              this.setState(prevState => ({maxPlayers: true}))
+            }
+          }}
+        />
+      )
+    }
+    else{
+      return null
     }
   }
 
@@ -29,14 +69,7 @@ export default class PlayerList extends Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={[
-            {key: '1', color: 'crimson'},
-            {key: '2', color: 'cornflowerblue'},
-            {key: '3', color: 'mediumseagreen'},
-            {key: '4', color: 'gold'},
-            {key: '5', color: 'hotpink'},
-            {key: '6', color: 'lightslategrey'},
-          ]}
+          data={this.state.activePlayers}
           renderItem={({item}) =>
             <View style={styles.list}>
               <View style={styles.numberBox} backgroundColor = {item.color}>
@@ -44,15 +77,18 @@ export default class PlayerList extends Component {
               </View>
               <TextInput
                 style = {styles.item}
-                placeholder = {this.state.nameList[item.key-1]}
-                onChangeText = {data => this.setState({ textInputData: data })}
-                value = {this.state.textInputData}
+                onChangeText = {data => this.setState({activePlayers: this.onUpdateItem(item.key-1, data)})}
+                // onChangeText = {data => this.setState({ textInputData: data })}
+                value = {this.state.activePlayers[item.key-1].name}
+                // value = {this.state.textInputData}
                 onEndEditing = {this.saveName}
                 >
               </TextInput>
             </View>
           }
+          keyExtractor={(item, index) => index.toString()}
         />
+        {this.getAddPlayersButton()}
       </View>
     );
   }
