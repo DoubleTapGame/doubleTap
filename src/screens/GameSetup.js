@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#7e0fa6',
     textAlign: 'center',
-    margin: 10,
   },
   heading3: {
     fontSize: 24,
