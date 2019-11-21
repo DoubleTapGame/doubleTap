@@ -17,11 +17,14 @@ export default class PlayerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePlayers: [
-        {key: '1', color: 'crimson', name: 'Player 1'},
-        {key: '2', color: 'cornflowerblue', name: 'Player 2'},
-      ],
+      activePlayers: [],
       maxPlayers: false};
+  }
+  componentDidMount(){
+    this.setState({activePlayers: [
+      {key: '1', color: 'crimson', name: 'Player 1'},
+      {key: '2', color: 'cornflowerblue', name: 'Player 2'},
+    ]})
   }
 
   saveName = async () => {
@@ -49,7 +52,7 @@ export default class PlayerList extends Component {
     if(!this.state.maxPlayers){
       return (
         <Button
-          title = 'Add another player'
+          title = 'Add player'
           onPress={() => {
             this.setState(prevState =>
               ({activePlayers: prevState.activePlayers.concat(generator.next().value)}));
@@ -57,6 +60,24 @@ export default class PlayerList extends Component {
               this.setState(prevState => ({maxPlayers: true}))
             }
           }}
+        />
+      )
+    }
+    else{
+      return null
+    }
+  }
+
+  getRemovePlayersButton() {
+    if(this.state.activePlayers.length > 2){
+      return (
+        <Button
+          title = 'Remove player'
+          // onPress={() => {
+          //   this.setState(prevState =>
+          //     ({activePlayers: prevState.activePlayers.concat(generator.next().value)}));
+          // }}
+          color='red'
         />
       )
     }
@@ -77,10 +98,10 @@ export default class PlayerList extends Component {
               </View>
               <TextInput
                 style = {styles.item}
-                onChangeText = {data => this.setState({activePlayers: this.onUpdateItem(item.key-1, data)})}
-                // onChangeText = {data => this.setState({ textInputData: data })}
+                onChangeText = {data => this.setState({
+                  activePlayers: this.onUpdateItem(item.key-1, data)
+                })}
                 value = {this.state.activePlayers[item.key-1].name}
-                // value = {this.state.textInputData}
                 onEndEditing = {this.saveName}
                 >
               </TextInput>
@@ -88,12 +109,15 @@ export default class PlayerList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        {this.getAddPlayersButton()}
+        <View style={styles.buttons}>
+          {this.getAddPlayersButton()}
+          {this.getRemovePlayersButton()}
+        </View>
       </View>
     );
   }
 }
-//{item.color}
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -120,5 +144,9 @@ const styles = StyleSheet.create({
     },
     list: {
       flexDirection: 'row',
+    },
+    buttons: {
+      flexDirection: 'row',
+      justifyContent: 'space-around'
     }
 });
