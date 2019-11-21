@@ -4,12 +4,11 @@
 import React, { Component } from 'react';
 // import fontFamily from '../../assets';
 import {
-    AppRegistry,
-    Platform,
     StyleSheet,
     Text,
     View,
     FlatList,
+    TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback,
 } from 'react-native';
 
 export default class Scoreboard extends Component {
@@ -50,9 +49,11 @@ export default class Scoreboard extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>Exit Game</Text>
-                </View>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')}>
+                  <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Exit Game</Text>
+                  </View>
+                </TouchableHighlight>
             </View>
         );
     }
