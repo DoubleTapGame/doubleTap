@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button } from 'react-native';
+import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import { red } from 'ansi-colors';
 
 
 function * addPlayers() {
-  yield {key: '3', color: 'mediumseagreen', name: 'Player 3'};
-  yield {key: '4', color: 'gold', name: 'Player 4'};
-  yield {key: '5', color: 'hotpink', name: 'Player 5'};
-  yield {key: '6', color: 'lightslategrey', name: 'Player 6'};
-  return;
+  while(true){
+    yield {color: 'mediumseagreen', name: 'Player 3'};
+    yield {color: 'gold', name: 'Player 4'};
+    yield {color: 'hotpink', name: 'Player 5'};
+    yield {color: 'lightslategrey', name: 'Player 6'};
+    yield {color: 'crimson', name: 'Player 1'};
+    yield {color: 'cornflowerblue', name: 'Player 2'};
+  }
 }
 
 const generator = addPlayers()
@@ -22,10 +23,11 @@ export default class PlayerList extends Component {
       activePlayers: [],
       maxPlayers: false};
   }
+
   componentDidMount(){
     this.setState({activePlayers: [
-      {key: '1', color: 'crimson', name: 'Player 1'},
-      {key: '2', color: 'cornflowerblue', name: 'Player 2'},
+      {color: 'crimson', name: 'Player 1'},
+      {color: 'cornflowerblue', name: 'Player 2'},
     ]})
   }
 
@@ -48,6 +50,11 @@ export default class PlayerList extends Component {
       }
     });
     return list
+  };
+
+  removePlayer = index => {
+    console.log('remove player' + index)
+    return this.state.activePlayers.filter((item, j) => index !== j);
   };
 
   getAddPlayersButton() {
@@ -75,21 +82,25 @@ export default class PlayerList extends Component {
       <View style={styles.container}>
         <FlatList
           data={this.state.activePlayers}
-          renderItem={({item}) =>
+          renderItem={({item, index}) =>
             <View style={styles.list}>
               <View style={styles.numberBox} backgroundColor = {item.color}>
-                <Text style={styles.numberBoxText}>{item.key}</Text>
+                <Text style={styles.numberBoxText}>{index+1}</Text>
               </View>
               <TextInput
                 style = {styles.item}
                 onChangeText = {data => this.setState({
-                  activePlayers: this.onUpdateItem(item.key-1, data)
+                  activePlayers: this.onUpdateItem(index, data)
                 })}
-                value = {this.state.activePlayers[item.key-1].name}
+                value = {this.state.activePlayers[index].name}
                 onEndEditing = {this.saveName}
                 >
               </TextInput>
-              <TouchableHighlight>
+              <TouchableHighlight onPress={() => {
+                this.setState({activePlayers: this.removePlayer(index)})
+                this.setState({maxPlayers: false})
+              }
+              }>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}> x </Text>
                 </View>
