@@ -20,7 +20,7 @@ class GameSetup extends Component {
     super(props);
     this.state = {
       activePlayers: [],
-      numberOfTurns: 1
+      numberOfTurns: 1,
     };
     this.handler = this.handler.bind(this)
     this.setNumberOfTurns = this.setNumberOfTurns.bind(this)
@@ -48,20 +48,20 @@ class GameSetup extends Component {
   viewPlayButton(){
     if(this.state.activePlayers.length > 1){
       return(
-        <Button 
-            title="Play!"
-            color="purple"
-            onPress={() => this.props.navigation.navigate('ReadyUp')}
+        <Button title="Play!" color="purple"
+          onPress={() => {
+            this.props.navigation.navigate('ReadyUp', {
+              turnOrder: this.generateGame(),
+              activePlayers: this.state.activePlayers
+            });
+          }}
         />
       )
     }
     else{
       return(
-        <Button 
-            title="Play!"
-            color="purple"
-            disabled={true}
-        />
+        <Button title="Play!"color="purple"
+            disabled={true}/>
       )
     }
   }
@@ -79,8 +79,8 @@ class GameSetup extends Component {
     }
     results = results.concat(duplications)
     this.shuffle(results)
-    console.log("results: "+results)
-    //return results
+    
+    return results
   }
 
   shuffle(array) { // from: https://javascript.info/task/shuffle
@@ -118,7 +118,6 @@ class GameSetup extends Component {
           />
         </View>
         <View style={styles.buttonBox}>
-          <Button title="generate"onPress={()=>this.generateGame()}/>
           {this.viewPlayButton()}
         </View>
       </View>
