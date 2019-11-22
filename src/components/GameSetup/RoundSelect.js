@@ -5,17 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class RoundSelect extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activePlayers: [],  
+    this.state = { 
       numberOfTurns: 1
     };
-  }
-
-  componentDidMount(){
-    this.setState({activePlayers: [
-      {color: 'crimson', name: 'Player 1'},
-      {color: 'cornflowerblue', name: 'Player 2'},
-    ]})
   }
 
   updateRoundNumber(bool){
@@ -42,7 +34,7 @@ export default class RoundSelect extends Component {
   }
 
   getRoundCountText(){
-    const numberOfPlayers = this.state.activePlayers.length
+    const numberOfPlayers = this.props.activePlayers.length
 
     if(this.state.numberOfTurns === 1){
       return "( " + this.calculateRounds(numberOfPlayers, 1) + " rounds)"
@@ -57,7 +49,7 @@ export default class RoundSelect extends Component {
 
   calculateRounds(num, multiplier){
     if(num > 1){
-      const product = this.factorial(num)/this.factorial(num-2)
+      const product = this.factorial(num)/(this.factorial(num-2)*2)
       return product*multiplier
     }
     else if (num===1){
@@ -76,19 +68,6 @@ export default class RoundSelect extends Component {
     else if(n===4){return 24}
     else if(n===5){return 120}
     else if(n===6){return 720}
-  }
-
-  getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@activePlayers')
-      console.log("loaded: " + value)
-      if(value !== null) {
-        // value previously stored
-        this.setState({activePlayers: value})
-      }
-    } catch(e) {
-      // error reading value
-    }
   }
 
   render() {

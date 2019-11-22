@@ -28,7 +28,6 @@ class GameSetup extends Component {
       {color: 'crimson', name: 'Player 1'},
       {color: 'cornflowerblue', name: 'Player 2'},
     ]})
-    this.getData()
   }
 
   handler(list) {
@@ -37,17 +36,17 @@ class GameSetup extends Component {
     })
   }
 
-  getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@activePlayers')
-      if(value !== null) {
-        this.setState({activePlayers: value})
-      }
-    } catch(e) {
-      // error reading value
-    }
-    return
-  }
+  // getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('@activePlayers')
+  //     if(value !== null) {
+  //       this.setState({activePlayers: value})
+  //     }
+  //   } catch(e) {
+  //     // error reading value
+  //   }
+  //   return
+  // }
 
   render() {
     return (

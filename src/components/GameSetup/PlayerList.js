@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, FlatList, StyleSheet, Text, TextInput, Alert, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 function * addPlayers() {
   while(true){
     yield {color: 'mediumseagreen', name: 'Player 3'};
@@ -31,7 +30,6 @@ export default class PlayerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // activePlayers: [],
       maxPlayers: false};
   }
 
@@ -44,15 +42,14 @@ export default class PlayerList extends Component {
 
   saveNamesToLocal = async () => {
     try {
-      console.log(this.state.activePlayers)
-      await AsyncStorage.setItem('@activePlayers', JSON.stringify(this.state.activePlayers))
+      await AsyncStorage.setItem('@activePlayers', JSON.stringify(this.props.activePlayers))
     } catch (e) {
       // saving error
     }
   }
 
   updateNames = (i, text) => {
-    const list = this.state.activePlayers.map((item, j) => {
+    const list = this.props.activePlayers.map((item, j) => {
       if (j === i) {
         item.name = text
         return item
@@ -63,9 +60,21 @@ export default class PlayerList extends Component {
     return list
   };
 
+  changePlayerColor(index){
+    const list = this.props.activePlayers.map((item, j) => {
+      if (j === index) {
+        item.color = colorGenerator.next().value
+        return item
+      } else {
+        return item;
+      }
+    });
+    return list
+  }
+
   removePlayer = index => {
     console.log('remove player' + index)
-    return this.state.activePlayers.filter((item, j) => index !== j);
+    return this.props.activePlayers.filter((item, j) => index !== j);
   };
 
   showAddPlayersButton() {
@@ -74,9 +83,8 @@ export default class PlayerList extends Component {
         <Button
           title = 'Add player'
           onPress={() => {
-            this.setState(prevState =>
-              ({activePlayers: prevState.activePlayers.concat(generator.next().value)}));
-            if(this.state.activePlayers.length === 5){
+            this.props.handler(this.props.activePlayers.concat(generator.next().value));
+            if(this.props.activePlayers.length === 5){
               this.setState(prevState => ({maxPlayers: true}))
             }
           }}
@@ -88,27 +96,15 @@ export default class PlayerList extends Component {
     }
   }
 
-  changePlayerColor(index){
-    const list = this.state.activePlayers.map((item, j) => {
-      if (j === index) {
-        item.color = colorGenerator.next().value
-        return item
-      } else {
-        return item;
-      }
-    });
-    return list
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.activePlayers}
+          data={this.props.activePlayers}
           renderItem={({item, index}) =>
             <View style={styles.list}>
-              <TouchableOpacity onPress={() => {this.setState({
-                activePlayers: this.changePlayerColor(index)})}
+              <TouchableOpacity onPress={() => {
+                this.props.handler(this.changePlayerColor(index))}
               }>
                 <View style={styles.numberBox} backgroundColor = {item.color}>
                   <Text style={styles.numberBoxText}>{index+1}</Text>
@@ -116,15 +112,13 @@ export default class PlayerList extends Component {
               </TouchableOpacity>
               <TextInput
                 style = {styles.item}
-                onChangeText = {data => this.setState({
-                  activePlayers: this.updateNames(index, data)
-                })}
-                value = {this.state.activePlayers[index].name}
+                onChangeText = {data => this.props.handler(this.updateNames(index, data))}
+                value = {this.props.activePlayers[index].name}
                 onEndEditing = {this.saveNamesToLocal}
                 >
               </TextInput>
               <TouchableOpacity onPress={() => {
-                this.setState({activePlayers: this.removePlayer(index)})
+                this.props.handler(this.removePlayer(index))
                 this.setState({maxPlayers: false})
               }
               }>
