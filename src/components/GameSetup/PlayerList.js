@@ -52,6 +52,7 @@ export default class PlayerList extends Component {
     const list = this.props.activePlayers.map((item, j) => {
       if (j === i) {
         item.name = text
+        if(text==="Howdy"){item.color='mediumpurple'}
         return item
       } else {
         return item;
