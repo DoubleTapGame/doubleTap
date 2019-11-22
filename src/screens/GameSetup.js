@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import PlayerList from '../components/GameSetup/PlayerList.js'
 import AsyncStorage from '@react-native-community/async-storage'
+import RoundSelect from '../components/GameSetup/RoundSelect.js';
 
 class GameSetup extends Component {
   static navigationOptions = {
@@ -17,20 +18,36 @@ class GameSetup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: 'hello'};
+    this.state = {
+      activePlayers: []};
+    this.handler = this.handler.bind(this)
   }
   
-getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@activePlayers')
-    if(value !== null) {
-      return value
-    }
-  } catch(e) {
-    // error reading value
+  componentDidMount(){
+    this.setState({activePlayers: [
+      {color: 'crimson', name: 'Player 1'},
+      {color: 'cornflowerblue', name: 'Player 2'},
+    ]})
+    this.getData()
   }
-  return
-}
+
+  handler(list) {
+    this.setState({
+      activePlayers: list
+    })
+  }
+
+  getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@activePlayers')
+      if(value !== null) {
+        this.setState({activePlayers: value})
+      }
+    } catch(e) {
+      // error reading value
+    }
+    return
+  }
 
   render() {
     return (
@@ -44,24 +61,18 @@ getData = async () => {
           <Text style={styles.heading2}>
             Enter names below:
           </Text>
-          <PlayerList />
+          <PlayerList
+            activePlayers={this.state.activePlayers}
+            handler={this.handler}
+          />
         </View>
         <View style={styles.roundSelectBox}>
           <Text style={styles.heading2}>
             Players will play each other:
           </Text>
-          <Text style={styles.heading3}>
-            {this.state.name}
-          </Text>
+          <RoundSelect activePlayers={this.state.activePlayers}/>
         </View>
         <View style={styles.buttonBox}>
-          {/* <Button 
-            title="update text"
-            color="blue"
-            onPress={() => this.getData().then(value => {
-              this.setState(prevState => ({name: value}))
-            })}
-          /> */}
           <Button 
             title="Play!"
             color="purple"

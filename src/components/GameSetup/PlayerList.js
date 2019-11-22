@@ -31,16 +31,16 @@ export default class PlayerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePlayers: [],
+      // activePlayers: [],
       maxPlayers: false};
   }
 
-  componentDidMount(){
-    this.setState({activePlayers: [
-      {color: 'crimson', name: 'Player 1'},
-      {color: 'cornflowerblue', name: 'Player 2'},
-    ]})
-  }
+  // componentDidMount(){
+  //   this.setState({activePlayers: [
+  //     {color: 'crimson', name: 'Player 1'},
+  //     {color: 'cornflowerblue', name: 'Player 2'},
+  //   ]})
+  // }
 
   saveNamesToLocal = async () => {
     try {
@@ -123,7 +123,7 @@ export default class PlayerList extends Component {
                 onEndEditing = {this.saveNamesToLocal}
                 >
               </TextInput>
-              <TouchableHighlight onPress={() => {
+              <TouchableOpacity onPress={() => {
                 this.setState({activePlayers: this.removePlayer(index)})
                 this.setState({maxPlayers: false})
               }
@@ -131,12 +131,13 @@ export default class PlayerList extends Component {
                 <View style={styles.button}>
                   <Text style={styles.buttonText}> x </Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           }
           keyExtractor={(item, index) => index.toString()}
+          style={styles.flatList}
         />
-        <View style={styles.addButton}>
+        <View style={styles.addButtonContainer}>
           {this.showAddPlayersButton()}
         </View>
       </View>
@@ -184,8 +185,12 @@ const styles = StyleSheet.create({
       textAlignVertical: 'center',
       color: 'red',
     },
-    addButton: {
+    addButtonContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-around'
+      justifyContent: 'space-around',
+      marginTop: 10,
+    },
+    flatList: {
+      flexGrow: 0
     }
 });
