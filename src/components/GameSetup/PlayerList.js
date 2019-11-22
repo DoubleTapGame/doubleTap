@@ -4,12 +4,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 function * addPlayers() {
   while(true){
-    yield {color: 'mediumseagreen', name: 'Player 3'};
-    yield {color: 'gold', name: 'Player 4'};
-    yield {color: 'hotpink', name: 'Player 5'};
-    yield {color: 'lightslategrey', name: 'Player 6'};
-    yield {color: 'crimson', name: 'Player 1'};
-    yield {color: 'cornflowerblue', name: 'Player 2'};
+    yield {color: 'mediumseagreen', name: 'Player 3', score: 0};
+    yield {color: 'gold', name: 'Player 4', score: 0};
+    yield {color: 'hotpink', name: 'Player 5', score: 0};
+    yield {color: 'lightslategrey', name: 'Player 6', score: 0};
+    yield {color: 'crimson', name: 'Player 1', score: 0};
+    yield {color: 'cornflowerblue', name: 'Player 2', score: 0};
   }
 }
 const generator = addPlayers()

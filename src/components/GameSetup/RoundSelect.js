@@ -3,29 +3,23 @@ import { View, StyleSheet, Text, Alert, TouchableHighlight, TouchableOpacity } f
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class RoundSelect extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      numberOfTurns: 1
-    };
-  }
 
   updateRoundNumber(bool){
       //add 1
-      if(bool && this.state.numberOfTurns < 3) {
-          this.setState(prev => ({numberOfTurns: prev.numberOfTurns + 1}))
+      if(bool && this.props.numberOfTurns < 3) {
+        this.props.handler(this.props.numberOfTurns + 1)
       }
       //subtract 1
-      else if(!bool && this.state.numberOfTurns > 1) {
-        this.setState(prev => ({numberOfTurns: prev.numberOfTurns - 1}))
+      else if(!bool && this.props.numberOfTurns > 1) {
+        this.props.handler(this.props.numberOfTurns - 1)
       }
   }
 
   getRoundText(){
-    if(this.state.numberOfTurns === 1){
+    if(this.props.numberOfTurns === 1){
       return "Once"
     }
-    else if(this.state.numberOfTurns === 2){
+    else if(this.props.numberOfTurns === 2){
       return "Twice"
     }
     else {
@@ -36,10 +30,10 @@ export default class RoundSelect extends Component {
   getRoundCountText(){
     const numberOfPlayers = this.props.activePlayers.length
 
-    if(this.state.numberOfTurns === 1){
+    if(this.props.numberOfTurns === 1){
       return "( " + this.calculateRounds(numberOfPlayers, 1) + " rounds)"
     }
-    else if(this.state.numberOfTurns === 2){
+    else if(this.props.numberOfTurns === 2){
       return "( " + this.calculateRounds(numberOfPlayers, 2) + " rounds)"
     }
     else {
