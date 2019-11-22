@@ -36,17 +36,27 @@ class GameSetup extends Component {
     })
   }
 
-  // getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('@activePlayers')
-  //     if(value !== null) {
-  //       this.setState({activePlayers: value})
-  //     }
-  //   } catch(e) {
-  //     // error reading value
-  //   }
-  //   return
-  // }
+  viewPlayButton(){
+    if(this.state.activePlayers.length > 1){
+      return(
+        <Button 
+            title="Play!"
+            color="purple"
+            onPress={() => this.props.navigation.navigate('ReadyUp')}
+        />
+      )
+    }
+    else{
+      return(
+        <Button 
+            title="Play!"
+            color="purple"
+            onPress={() => this.props.navigation.navigate('ReadyUp')}
+            disabled={true}
+        />
+      )
+    }
+  }
 
   render() {
     return (
@@ -72,11 +82,7 @@ class GameSetup extends Component {
           <RoundSelect activePlayers={this.state.activePlayers}/>
         </View>
         <View style={styles.buttonBox}>
-          <Button 
-            title="Play!"
-            color="purple"
-            onPress={() => this.props.navigation.navigate('ReadyUp')}
-          />
+          {this.viewPlayButton()}
         </View>
       </View>
     );
