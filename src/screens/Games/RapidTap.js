@@ -19,29 +19,37 @@ class RapidTap extends React.Component {
 
   componentDidMount(){
     const intervalID = setInterval(() => {
-        if(this.state.timer > 0){
-          this.setState(prevState => {
-              return { timer: prevState.timer - 1 };
-          });
-          this.setState(prevState => {
-              return { percentage: Math.trunc((prevState.timer/5)*100) + "%"};
-          });
-        }
-        else if(this.state.timer === 0){
-          this.setState(prevState => {
-              return { gameStart: true};
-          });
-          clearInterval(intervalID);
-        }
-      }, 1000);
+      this.setState(prevState => {
+        return { timer: prevState.timer - 1 };
+      });  
+      if(this.state.timer > 0){
+        this.setState(prevState => {
+          return { percentage: Math.trunc((prevState.timer/5)*100) + "%"};
+        });
+      }
+      else {
+        this.setState({gameStart: true})
+        clearInterval(intervalID);
+      }
+    }, 1000);
   }
 
   componentDidUpdate(){
     if(this.state.player1count>=100){
       console.log('player one wins')
+      this.props.navigation.navigate('Scoreboard', {
+        activePlayers: this.props.navigation.getParam('activePlayers'),
+        turnOrder: this.props.navigation.getParam('turnOrder'),
+        winner: 1
+      })
     }
     else if(this.state.player2count>=100){
       console.log('player two wins')
+      this.props.navigation.navigate('Scoreboard', {
+        activePlayers: this.props.navigation.getParam('activePlayers'),
+        turnOrder: this.props.navigation.getParam('turnOrder'),
+        winner: 2
+      })
     }
   }
 
@@ -115,8 +123,10 @@ class RapidTap extends React.Component {
   }
 
   getHint(){
-    if(!this.state.gameStart){return <Text>First to 100 taps wins!</Text>}
-    else {return <Text>Tap!</Text>}
+    if(!this.state.gameStart){
+      return <Text style={{fontSize: 32}}>First to 100 taps wins!</Text>}
+    else {
+      return <Text style={{fontSize: 32}}>Tap!</Text>}
   }
 
   render() {
