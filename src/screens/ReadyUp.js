@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import RapidTap from './Games/RapidTap';
 
 class ReadyUp extends React.Component {
   
@@ -15,21 +16,28 @@ class ReadyUp extends React.Component {
       width: '20%',
       player1ready: false,
       player2ready: false,
-      readyUp: ""
     };
   }
 
   componentDidMount(){
     const intervalID = setInterval(() => {
-        if(this.state.timer > 1){
+        if(this.state.timer >= 1){
           this.setState(prevState => {return { timer: prevState.timer - 1 };});
         }
-        else if(this.state.timer === 1){
+        if(this.state.timer === 0){
           this.setState({ width: "80%"})
-          this.setState({ readyUp: "(Tap to ready up!)"})
           clearInterval(intervalID);
         }
       }, 1000);
+  }
+
+  componentDidUpdate(){
+    console.log('cDU P1: '+this.state.player1ready)
+    console.log('cDU P2: '+this.state.player2ready)
+    if(this.state.player1ready && this.state.player2ready){
+      console.log('both players ready')
+      this.props.navigation.navigate('RapidTap')
+    }
   }
 
   getViewStyle(num){
@@ -77,26 +85,22 @@ class ReadyUp extends React.Component {
 
   toggleReadyStatus(num){
     if(num === 1){
-      this.setState(prevState => {
-        return { player1ready: !prevState.player1ready };
-      });
+      this.setState(prevState => ({player1ready: !prevState.player1ready }))
     }
-    else{
-      this.setState(prevState => {
-        return { player2ready: !prevState.player2ready };
-      });
+    if(num === 2){
+      this.setState(prevState => ({player2ready: !prevState.player2ready }))
     }
   }
 
-  showText(number){
-    if(number === 1 && this.state.player1ready){
-      return(<View><Text>Ready!</Text></View>)
-    }
-    if(number === 2 && this.state.player2ready){
-      return(<View><Text>Ready!</Text></View>)
+  getReadyText(num){
+    if(this.state.timer > 0) {return ''}
+    else if(num===1){
+      if(this.state.player1ready){return 'Ready!'}
+      else{return '(Tap to ready up!)'}
     }
     else{
-      return(<View/>)
+      if(this.state.player2ready){return 'Ready!'}
+      else{return '(Tap to ready up!)'}
     }
   }
 
@@ -107,16 +111,14 @@ class ReadyUp extends React.Component {
             <View style={this.getViewStyle(2)}>
               {this.getGameName()}
               <Text style={styles.playerName}>{this.getPlayerName(2)}</Text>
-              <Text style={styles.tapText}>{this.state.readyUp}</Text>
-              {this.showText(2)}
+              <Text style={styles.tapText}>{this.getReadyText(2)}</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(1)}>
             <View style={this.getViewStyle(1)}>
               {this.getGameName()}
               <Text style={styles.playerName}>{this.getPlayerName(1)}</Text>
-              <Text style={styles.tapText}>{this.state.readyUp}</Text>
-              {this.showText(1)}
+              <Text style={styles.tapText}>{this.getReadyText(1)}</Text>
             </View>
           </TouchableHighlight>
         </View>
