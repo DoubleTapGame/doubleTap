@@ -100,7 +100,7 @@ class GameSetup extends Component {
         </View>
         <View style={styles.playerListBox}>
           <Text style={styles.heading2}>
-            Enter names below:
+            Choose names and colors
           </Text>
           <PlayerList
             activePlayers={this.state.activePlayers}
@@ -109,7 +109,7 @@ class GameSetup extends Component {
         </View>
         <View style={styles.roundSelectBox}>
           <Text style={styles.heading2}>
-            Players will play each other:
+            Everyone plays each other:
           </Text>
           <RoundSelect
             activePlayers={this.state.activePlayers}
