@@ -36,6 +36,15 @@ class RapidTap extends React.Component {
       }, 1000);
   }
 
+  componentDidUpdate(){
+    if(this.state.player1count>=100){
+      console.log('player one wins')
+    }
+    else if(this.state.player2count>=100){
+      console.log('player two wins')
+    }
+  }
+
   getProgress(){
     return (
         <View style={{backgroundColor: "black", width: this.state.percentage}}/>
@@ -50,12 +59,12 @@ class RapidTap extends React.Component {
   }
   
   incrementCount(number){
-    if(number === 1){
+    if(number === 1 && this.state.gameStart){
       this.setState(prevState => {
         return { player1count: prevState.player1count + 1 };
       });
     }
-    else{
+    else if (number === 2 && this.state.gameStart){
       this.setState(prevState => {
         return { player2count: prevState.player2count + 1 };
       });
@@ -83,14 +92,42 @@ class RapidTap extends React.Component {
     }
   }
 
+  getViewStyle(num){
+    let players = this.props.navigation.getParam('activePlayers')
+    let matchup = this.props.navigation.getParam('matchup')
+    if(num === 1){
+      return {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: players[matchup[0]].color,
+      }
+    }
+    else{
+      return{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: players[matchup[1]].color,
+        transform: [{ rotate: '180deg'}]
+      }
+    }
+  }
+
+  getHint(){
+    if(!this.state.gameStart){return <Text>First to 100 taps wins!</Text>}
+    else {return <Text>Tap!</Text>}
+  }
+
   render() {
       return (
         <View style={{flex: 1}}>
           <TouchableHighlight style={{flex: 1}} onPress={() => this.incrementCount(2)}>
-            <View style={styles.player2Field}>
-                <View>
-                    {this.getScoreText(2)}
-                </View>
+            <View style={this.getViewStyle(2)}>
+              {this.getHint()}
+              <View>
+                {this.getScoreText(2)}
+              </View>
             </View>
           </TouchableHighlight>
 
@@ -100,11 +137,11 @@ class RapidTap extends React.Component {
           </View>
 
           <TouchableHighlight style={{flex: 1}} onPress={() => this.incrementCount(1)}>
-            <View style={styles.player1Field}>
-                <Text>First to 100 wins!</Text>
-                <View style={{justifyContent: 'center'}}>
-                    {this.getScoreText(1)}
-                </View>
+            <View style={this.getViewStyle(1)}>
+              {this.getHint()}
+              <View style={{justifyContent: 'center'}}>
+                {this.getScoreText(1)}
+              </View>
             </View>
           </TouchableHighlight>
         </View>
@@ -113,19 +150,6 @@ class RapidTap extends React.Component {
 }
 
 const styles = StyleSheet.create ({
-    player2Field: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'cornflowerblue',
-      transform: [{ rotate: '180deg'}]
-    },
-    player1Field: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'crimson',
-    },
     timer:{
       flex: 1,
       fontSize: 20,
