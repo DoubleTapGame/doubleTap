@@ -15,6 +15,7 @@
     "react-native": "0.61.2",
     "react-native-game-engine": "^0.10.1",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-shapes": "^0.1.0",
     "react-navigation": "^3.13.0",
     "react-navigation-stack": "^1.10.2"
   },

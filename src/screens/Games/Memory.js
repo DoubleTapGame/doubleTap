@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import { Triangle } from 'react-native-shapes';
 
 class Memory extends React.Component {
 
@@ -12,7 +13,7 @@ class Memory extends React.Component {
         this.state = {
             player1count: 0,
             player2count: 0,
-            timer: 5,
+            timer: 10,
             gameStart: false,
             percentage: '100%'};
     }
@@ -88,12 +89,39 @@ class Memory extends React.Component {
             <View style={{flex: 1}}>
                 <TouchableHighlight style={{flex: 1}} onPress={() => this.incrementCount(2)}>
                     <View style={styles.player2Field}>
-                        <View>
-                            {this.getScoreText(2)}
-                        </View>
-                        <View style={styles.boxContainer}>
-                            <View style={styles.boxSpace}>
-                                <Text>Shape</Text>
+                    <View style={styles.memoryContainer}>
+                            <View style={styles.boxSetContainer}>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                            </View>
+                            <View style={styles.boxSetContainer}>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                            </View>
+                            <View style={styles.boxSetContainer}>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
+                                <View style={styles.boxSpace}>
+                                    <Text style={styles.shape}>Shape</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -109,7 +137,8 @@ class Memory extends React.Component {
                         <View style={styles.memoryContainer}>
                             <View style={styles.boxSetContainer}>
                                 <View style={styles.boxSpace}>
-                                    <Text style={styles.shape}>Shape</Text>
+                                    {/* <Text style={styles.shape}>Shape</Text> */}
+                                    <Triangle style={styles.shape}/>
                                 </View>
                                 <View style={styles.boxSpace}>
                                     <Text style={styles.shape}>Shape</Text>
@@ -192,6 +221,8 @@ const styles = StyleSheet.create ({
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     shape: {
         justifyContent: 'center',
