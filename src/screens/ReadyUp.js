@@ -36,7 +36,10 @@ class ReadyUp extends React.Component {
     console.log('cDU P2: '+this.state.player2ready)
     if(this.state.player1ready && this.state.player2ready){
       console.log('both players ready')
-      this.props.navigation.navigate('RapidTap')
+      this.props.navigation.navigate('RapidTap', {
+        activePlayers: this.props.navigation.getParam('activePlayers'),
+        matchup: this.state.matchup
+      })
     }
   }
 
