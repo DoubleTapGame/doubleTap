@@ -80,7 +80,9 @@ class ReadyUp extends React.Component {
       width: this.state.width
     };
     if(this.state.width==="80%"){
-      return <Text style={textStyle}>Rapid Tap!</Text>
+      return (
+        <Text style={textStyle}>Rapid Tap!</Text>
+      )
     }
     else{
       return <Text style={textStyle}></Text>
@@ -93,6 +95,16 @@ class ReadyUp extends React.Component {
     }
     if(num === 2 && this.state.timer === 0){
       this.setState(prevState => ({player2ready: !prevState.player2ready }))
+    }
+  }
+
+  getHelpButton(){
+    if(this.state.width==="80%"){
+      return (
+        <View style={styles.helpButton}>
+          <Text style={styles.helpMark}>?</Text>
+        </View>
+      )
     }
   }
 
@@ -114,6 +126,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(2)}>
             <View style={this.getViewStyle(2)}>
               {this.getGameName()}
+              {this.getHelpButton()}
               <Text style={styles.playerName}>{this.getPlayerName(2)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(2)}</Text>
             </View>
@@ -121,6 +134,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(1)}>
             <View style={this.getViewStyle(1)}>
               {this.getGameName()}
+              {this.getHelpButton()}
               <Text style={styles.playerName}>{this.getPlayerName(1)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(1)}</Text>
             </View>
@@ -142,6 +156,22 @@ const styles = StyleSheet.create ({
       textAlign: 'center',
       textAlignVertical: 'center',
       fontSize: 30,
+    },
+    helpButton: {
+      backgroundColor: 'lightgrey',
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      borderColor: 'black',
+      borderWidth: 3,
+      marginTop: 10,
+      justifyContent: 'center'
+    },
+    helpMark: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      color: 'black',
+      alignSelf: 'center'
     }
 })
 export default ReadyUp;
