@@ -8,11 +8,87 @@ import {
   View,
 } from 'react-native';
 import PlayerList from '../components/GameSetup/PlayerList.js'
+import RoundSelect from '../components/GameSetup/RoundSelect.js'
+import AsyncStorage from '@react-native-community/async-storage'
 
 class GameSetup extends Component {
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePlayers: [],
+      numberOfTurns: 1,
+    };
+    this.handler = this.handler.bind(this)
+    this.setNumberOfTurns = this.setNumberOfTurns.bind(this)
+  }
+  
+  componentDidMount(){
+    this.setState({activePlayers: [
+      {color: 'crimson', name: 'Player 1', score: 0},
+      {color: 'cornflowerblue', name: 'Player 2', score: 0},
+    ]})
+  }
+
+  handler(list) {
+    this.setState({
+      activePlayers: list
+    })
+  }
+
+  setNumberOfTurns(num) {
+    this.setState({
+      numberOfTurns: num
+    })
+  }
+
+  viewPlayButton(){
+    if(this.state.activePlayers.length > 1){
+      return(
+        <Button title="Play!" color="purple"
+          onPress={() => {
+            this.props.navigation.navigate('ReadyUp', {
+              turnOrder: this.generateGame(),
+              activePlayers: this.state.activePlayers
+            });
+          }}
+        />
+      )
+    }
+    else{
+      return(
+        <Button title="Play!"color="purple"
+            disabled={true}/>
+      )
+    }
+  }
+
+  generateGame(){
+    let results = []
+    for(i = 0; i < this.state.activePlayers.length-1; i++){
+      for(j = i + 1; j < this.state.activePlayers.length; j++){
+        results.push([i,j])
+      }
+    }
+    let duplications = []
+    for(i = 1; i < this.state.numberOfTurns; i++){
+      duplications = duplications.concat(results)
+    }
+    results = results.concat(duplications)
+    this.shuffle(results)
+    
+    return results
+  }
+
+  shuffle(array) { // from: https://javascript.info/task/shuffle
+    for(m = array.length - 1; m > 0; m--) {
+      let n = Math.floor(Math.random() * (m + 1));
+      [array[m], array[n]] = [array[n], array[m]];
+    }
+  }
 
   render() {
     return (
@@ -24,24 +100,25 @@ class GameSetup extends Component {
         </View>
         <View style={styles.playerListBox}>
           <Text style={styles.heading2}>
-            Enter names below:
+            Choose names and colors
           </Text>
-          <PlayerList />
+          <PlayerList
+            activePlayers={this.state.activePlayers}
+            handler={this.handler}
+          />
         </View>
         <View style={styles.roundSelectBox}>
           <Text style={styles.heading2}>
-            Players will play each other:
+            Everyone plays each other:
           </Text>
-          <Text style={styles.heading3}>
-            Round Select Goes Here
-          </Text>
+          <RoundSelect
+            activePlayers={this.state.activePlayers}
+            numberOfTurns={this.state.numberOfTurns}
+            handler={this.setNumberOfTurns}
+          />
         </View>
         <View style={styles.buttonBox}>
-          <Button 
-            title="Play!"
-            color="purple"
-            onPress={() => this.props.navigation.navigate('ReadyUp')}
-          />
+          {this.viewPlayButton()}
         </View>
       </View>
     );
@@ -93,7 +170,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#7e0fa6',
     textAlign: 'center',
-    margin: 10,
   },
   heading3: {
     fontSize: 24,
