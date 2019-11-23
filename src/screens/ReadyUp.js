@@ -38,7 +38,8 @@ class ReadyUp extends React.Component {
       console.log('both players ready')
       this.props.navigation.navigate('RapidTap', {
         activePlayers: this.props.navigation.getParam('activePlayers'),
-        matchup: this.state.matchup
+        matchup: this.state.matchup,
+        turnOrder: this.props.navigation.getParam('turnOrder'),
       })
     }
   }
@@ -87,10 +88,10 @@ class ReadyUp extends React.Component {
   }
 
   toggleReadyStatus(num){
-    if(num === 1){
+    if(num === 1 && this.state.timer === 0){
       this.setState(prevState => ({player1ready: !prevState.player1ready }))
     }
-    if(num === 2){
+    if(num === 2 && this.state.timer === 0){
       this.setState(prevState => ({player2ready: !prevState.player2ready }))
     }
   }
@@ -114,14 +115,14 @@ class ReadyUp extends React.Component {
             <View style={this.getViewStyle(2)}>
               {this.getGameName()}
               <Text style={styles.playerName}>{this.getPlayerName(2)}</Text>
-              <Text style={styles.tapText}>{this.getReadyText(2)}</Text>
+              <Text style={styles.readyText}>{this.getReadyText(2)}</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(1)}>
             <View style={this.getViewStyle(1)}>
               {this.getGameName()}
               <Text style={styles.playerName}>{this.getPlayerName(1)}</Text>
-              <Text style={styles.tapText}>{this.getReadyText(1)}</Text>
+              <Text style={styles.readyText}>{this.getReadyText(1)}</Text>
             </View>
           </TouchableHighlight>
         </View>
@@ -136,11 +137,11 @@ const styles = StyleSheet.create ({
       textAlignVertical: 'center',
       fontSize: 52,
     },
-    tapText: {
+    readyText: {
       flex: 1,
       textAlign: 'center',
       textAlignVertical: 'center',
-      fontSize: 20,
+      fontSize: 30,
     }
 })
 export default ReadyUp;
