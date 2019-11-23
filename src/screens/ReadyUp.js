@@ -38,7 +38,8 @@ class ReadyUp extends React.Component {
       console.log('both players ready')
       this.props.navigation.navigate('RapidTap', {
         activePlayers: this.props.navigation.getParam('activePlayers'),
-        matchup: this.state.matchup
+        matchup: this.state.matchup,
+        turnOrder: this.props.navigation.getParam('turnOrder'),
       })
     }
   }
