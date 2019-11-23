@@ -9,7 +9,8 @@ import ScoreboardScreen from './src/screens/Scoreboard.js';
 import ReadyUpScreen from './src/screens/ReadyUp.js';
 import FinalResultsScreen from './src/screens/FinalResults.js';
 
-import RapidTapGame from './src/screens/Games/RapidTap.js'
+//import game screens here
+import RapidTapScreen from './src/screens/Games/RapidTap.js';
 
 const RootStack = createStackNavigator(
     {
@@ -19,7 +20,7 @@ const RootStack = createStackNavigator(
         ReadyUp: ReadyUpScreen,
         FinalResults: FinalResultsScreen,
 
-        RapidTap: RapidTapGame
+        RapidTap: RapidTapScreen,
     },
     {
         initialRouteName: "Home"
