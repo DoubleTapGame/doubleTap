@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import RapidTap from './Games/RapidTap';
+import HelpModal from '../components/HelpModal.js'
 
 class ReadyUp extends React.Component {
   
@@ -98,13 +98,9 @@ class ReadyUp extends React.Component {
     }
   }
 
-  getHelpButton(){
+  getHelpButton(num){
     if(this.state.width==="80%"){
-      return (
-        <View style={styles.helpButton}>
-          <Text style={styles.helpMark}>?</Text>
-        </View>
-      )
+      return <HelpModal player={num}/>
     }
   }
 
@@ -126,7 +122,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(2)}>
             <View style={this.getViewStyle(2)}>
               {this.getGameName()}
-              {this.getHelpButton()}
+              {this.getHelpButton(2)}
               <Text style={styles.playerName}>{this.getPlayerName(2)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(2)}</Text>
             </View>
@@ -134,7 +130,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(1)}>
             <View style={this.getViewStyle(1)}>
               {this.getGameName()}
-              {this.getHelpButton()}
+              {this.getHelpButton(1)}
               <Text style={styles.playerName}>{this.getPlayerName(1)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(1)}</Text>
             </View>
@@ -157,21 +153,5 @@ const styles = StyleSheet.create ({
       textAlignVertical: 'center',
       fontSize: 30,
     },
-    helpButton: {
-      backgroundColor: 'lightgrey',
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      borderColor: 'black',
-      borderWidth: 3,
-      marginTop: 10,
-      justifyContent: 'center'
-    },
-    helpMark: {
-      fontSize: 28,
-      fontWeight: 'bold',
-      color: 'black',
-      alignSelf: 'center'
-    }
 })
 export default ReadyUp;
