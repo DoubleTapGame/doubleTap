@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import RapidTap from './Games/RapidTap';
+import HelpModal from '../components/HelpModal.js'
 
 class ReadyUp extends React.Component {
   
@@ -80,7 +80,9 @@ class ReadyUp extends React.Component {
       width: this.state.width
     };
     if(this.state.width==="80%"){
-      return <Text style={textStyle}>Rapid Tap!</Text>
+      return (
+        <Text style={textStyle}>Rapid Tap!</Text>
+      )
     }
     else{
       return <Text style={textStyle}></Text>
@@ -93,6 +95,12 @@ class ReadyUp extends React.Component {
     }
     if(num === 2 && this.state.timer === 0){
       this.setState(prevState => ({player2ready: !prevState.player2ready }))
+    }
+  }
+
+  getHelpButton(num){
+    if(this.state.width==="80%"){
+      return <HelpModal player={num}/>
     }
   }
 
@@ -114,6 +122,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(2)}>
             <View style={this.getViewStyle(2)}>
               {this.getGameName()}
+              {this.getHelpButton(2)}
               <Text style={styles.playerName}>{this.getPlayerName(2)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(2)}</Text>
             </View>
@@ -121,6 +130,7 @@ class ReadyUp extends React.Component {
           <TouchableHighlight style={{flex: 1}} onPress={() => this.toggleReadyStatus(1)}>
             <View style={this.getViewStyle(1)}>
               {this.getGameName()}
+              {this.getHelpButton(1)}
               <Text style={styles.playerName}>{this.getPlayerName(1)}</Text>
               <Text style={styles.readyText}>{this.getReadyText(1)}</Text>
             </View>
@@ -142,6 +152,6 @@ const styles = StyleSheet.create ({
       textAlign: 'center',
       textAlignVertical: 'center',
       fontSize: 30,
-    }
+    },
 })
 export default ReadyUp;
