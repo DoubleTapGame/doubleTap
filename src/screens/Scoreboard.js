@@ -27,29 +27,36 @@ export default class Scoreboard extends Component {
                     </Text>
                 </View>
                 <View style={styles.listContainer}>
-                    <View>
-                        <View style={styles.listText}>
-                            <FlatList
-                                data={[
-                                    {key: '1', color: 'crimson'},
-                                    {key: '2', color: 'cornflowerblue'},
-                                    {key: '3', color: 'mediumseagreen'},
-                                    {key: '4', color: 'gold'},
-                                    {key: '5', color: 'hotpink'},
-                                    {key: '6', color: 'lightslategrey'},
-                                ]}
-                                renderItem={({item}) =>
-                                <View style={styles.list}>
-                                    <View style={styles.numberBox} backgroundColor = {item.color}>
-                                        <Text style={styles.numberBoxText}>{item.key}</Text>
-                                    </View>
-                                    <Text>PlayerName</Text>
-                                    <Text>00</Text>
+                    <View style={styles.listContent}>
+                        <FlatList
+                            data={[
+                                {key: '1', color: 'crimson'},
+                                {key: '2', color: 'cornflowerblue'},
+                                {key: '3', color: 'mediumseagreen'},
+                                {key: '4', color: 'gold'},
+                                {key: '5', color: 'hotpink'},
+                                {key: '6', color: 'lightslategrey'},
+                            ]}
+                            renderItem={({item}) =>
+                            <View style={styles.listItem}>
+                                <View style={styles.numberBox} backgroundColor = {item.color}>
+                                    <Text style={styles.numberBoxText}>{item.key}</Text>
                                 </View>
-                                }
-                            />
-                        </View>
+                                <Text style={styles.playerNameText}>
+                                    PlayerName
+                                </Text>
+                                <Text style={styles.playerScoreText}>
+                                    00
+                                </Text>
+                            </View>
+                            }
+                        />
                     </View>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Text style={styles.headerText}>
+                        Button
+                    </Text>
                 </View>
             </View>
         );
@@ -65,30 +72,34 @@ const styles = StyleSheet.create({
         backgroundColor: '#6816D3',
     },
     headerContainer: {
+        flex: 1,
         height: 100,
         width: 300,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 50,
+        marginTop: 40,
         // backgroundColor: 'green',
         
     },
     listContainer: {
+        flex: 6,
         height: 500,
-        width: 275,
-        marginBottom: 150,
+        width: '80%',
+        marginBottom: 15,
         backgroundColor: 'white',
         borderColor: 'white',
         borderWidth: 2,
         borderRadius: 10,
+        justifyContent: 'space-around'
 
     },
     buttonContainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         width: 200,
-        height: 60,
-        marginBottom: 60,
+        height: 40,
+        marginBottom: 10,
         backgroundColor: 'white',
         borderColor: 'white',
         borderWidth: 2,
@@ -100,41 +111,41 @@ const styles = StyleSheet.create({
         fontFamily: 'Futura',
         // fontFamily: 'Bangers',
     },
-    listText: {
+    listContent: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         color: 'black',
         fontFamily: 'Futura',
-        
     },
-    list: {
+    listItem: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         alignItems: 'center',
-        paddingRight: 15,
-        paddingBottom: 50
-    },
-    item: {
-        flex: 1,
-        padding: 5,
-        marginBottom: 2,
-        fontSize: 26,
-        borderBottomColor: '#000',
-        borderBottomWidth: 2
+        paddingHorizontal: 5,
+        paddingVertical: 10
     },
     numberBox: {
-        height: 40,
-        width: 40,
+        height: 60,
+        width: 60,
         marginRight: 10,
         borderWidth: 2,
         borderColor: 'white',
         borderWidth: 2,
         borderRadius: 10,
+        alignContent: 'center',
+        justifyContent: 'center'
     },
     numberBoxText: {
         fontSize: 30,
         textAlign: 'center',
+    },
+    playerNameText: {
+        fontSize: 24,
+        marginRight: 60,
+    },
+    playerScoreText: {
+        fontSize: 30
     },
     buttonText: {
         justifyContent: 'center',
@@ -142,6 +153,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Futura',
         color: 'black',
         fontSize: 25,
-
     }
 })
