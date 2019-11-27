@@ -40,7 +40,7 @@ class RapidTap extends React.Component {
       this.props.navigation.navigate('Scoreboard', {
         activePlayers: this.props.navigation.getParam('activePlayers'),
         turnOrder: this.props.navigation.getParam('turnOrder'),
-        winner: 1
+        winner: this.props.navigation.getParam('matchup')[0]
       })
     }
     else if(this.state.player2count>=100){
@@ -48,7 +48,7 @@ class RapidTap extends React.Component {
       this.props.navigation.navigate('Scoreboard', {
         activePlayers: this.props.navigation.getParam('activePlayers'),
         turnOrder: this.props.navigation.getParam('turnOrder'),
-        winner: 2
+        winner: this.props.navigation.getParam('matchup')[1]
       })
     }
   }
