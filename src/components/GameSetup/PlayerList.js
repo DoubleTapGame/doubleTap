@@ -8,7 +8,7 @@ function * addPlayers() {
     yield {color: 'gold', name: 'Player 4', score: 0};
     yield {color: 'hotpink', name: 'Player 5', score: 0};
     yield {color: 'lightslategrey', name: 'Player 6', score: 0};
-    yield {color: 'crimson', name: 'Player 1', score: 0};
+    yield {color: '#e83559', name: 'Player 1', score: 0};
     yield {color: 'cornflowerblue', name: 'Player 2', score: 0};
   }
 }
@@ -20,7 +20,7 @@ function * changeColor() {
     yield 'gold';
     yield 'hotpink';
     yield 'lightslategrey';
-    yield 'crimson';
+    yield '#e83559';
     yield 'cornflowerblue';
   }
 }
@@ -32,13 +32,6 @@ export default class PlayerList extends Component {
     this.state = {
       maxPlayers: false};
   }
-
-  // componentDidMount(){
-  //   this.setState({activePlayers: [
-  //     {color: 'crimson', name: 'Player 1'},
-  //     {color: 'cornflowerblue', name: 'Player 2'},
-  //   ]})
-  // }
 
   saveNamesToLocal = async () => {
     try {
