@@ -30,6 +30,15 @@ export default class HelpModal extends Component {
       })
     }
   }
+
+  getHelpTitle(){
+    return 'Rapid Tap'
+  }
+
+  getHelpBody(){
+    return 'Tap your half of the screen as fast as you can! The first player to 100 wins.'
+  }
+
   render() {
     return (
       <View>
@@ -38,7 +47,7 @@ export default class HelpModal extends Component {
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            this.setModalVisible(!this.state.modalVisible);
           }}>
           <TouchableOpacity
             onPress={() => {
@@ -46,7 +55,15 @@ export default class HelpModal extends Component {
             }}
             style={this.getBoxStyle()}>
             <View>
-              <Text>Hello World!</Text>
+              <Text style={styles.gameText}>
+                Game 
+              </Text>
+              <Text style={styles.title}>
+                {this.getHelpTitle()}
+              </Text>
+              <Text style={styles.body}>
+                {this.getHelpBody()}
+              </Text>
             </View>
           </TouchableOpacity>
         </Modal>
@@ -86,5 +103,21 @@ const styles = StyleSheet.create ({
       fontWeight: 'bold',
       color: 'black',
       alignSelf: 'center'
-    }
+    },
+    gameText: {
+      fontSize: 30,
+      alignSelf: 'center',
+      marginTop: 20
+    },
+    title: {
+      fontSize: 40,
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      marginVertical: 25,
+    },
+    body: {
+      fontSize: 28,
+      marginHorizontal: 20,
+      alignSelf: 'center'
+    },
 })
