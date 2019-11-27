@@ -5,18 +5,90 @@
 import React, { Component } from 'react';
 // import fontFamily from '../../assets';
 import {
-    AppRegistry,
-    Platform,
     StyleSheet,
     Text,
     View,
     FlatList,
+    TouchableHighlight,
 } from 'react-native';
+
+function compareValues(a, b) {
+    var keyA = a.score,
+    keyB = b.score;
+    
+    return (keyA - keyB)*(-1);
+}
 
 export default class Scoreboard extends Component {
     static navigationOptions = {
         header: null,
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          activePlayers: [],
+        };
+    }
+      
+    componentDidMount(){
+        this.setState({activePlayers: 
+            this.increaseScore(this.props.navigation.getParam('winner'))})   
+    }
+
+    increaseScore(index){
+        let players = this.props.navigation.getParam('activePlayers')
+        const list = players.map((item, j) => {
+            if (j === index) {
+              item.score = item.score + 1
+              return item
+            } else {
+              return item;
+            }
+        });
+        
+        return list
+    }
+
+    getButton(){
+      let order = this.props.navigation.getParam('turnOrder')
+      console.log("orderLength: "+order.length)
+      if(order.length > 0) {
+        return(  
+        <TouchableHighlight
+            onPress={() =>{
+              this.props.navigation.navigate('ReadyUp', {
+                activePlayers: this.state.activePlayers,
+                turnOrder: order,
+              })
+            }}
+            style={{height: 120}}
+          >
+          <View style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>
+              Continue
+            </Text>
+          </View>
+        </TouchableHighlight>
+        )
+      }
+      else {
+        return (
+        <TouchableHighlight
+            onPress={() =>{
+              this.props.navigation.navigate('Home')
+            }}
+            style={{height: 120}}
+          >
+          <View style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>
+              End Game
+            </Text>
+          </View>
+        </TouchableHighlight>
+        )
+      }
+    }
 
     render() {
         return (
@@ -25,39 +97,33 @@ export default class Scoreboard extends Component {
                     <Text style={styles.headerText}>
                         Scoreboard
                     </Text>
+                    <Text style={styles.subHeaderText}>
+                        Rounds remaining: {this.props.navigation.getParam('turnOrder').length}
+                    </Text>
                 </View>
                 <View style={styles.listContainer}>
                     <View style={styles.listContent}>
                         <FlatList
-                            data={[
-                                {key: '1', color: 'crimson'},
-                                {key: '2', color: 'cornflowerblue'},
-                                {key: '3', color: 'mediumseagreen'},
-                                {key: '4', color: 'gold'},
-                                {key: '5', color: 'hotpink'},
-                                {key: '6', color: 'lightslategrey'},
-                            ]}
-                            renderItem={({item}) =>
+                            data={this.state.activePlayers.slice().sort(compareValues)}
+                            renderItem={({item, index}) =>
                             <View style={styles.listItem}>
                                 <View style={styles.numberBox} backgroundColor = {item.color}>
-                                    <Text style={styles.numberBoxText}>{item.key}</Text>
+                                    <Text style={styles.numberBoxText}>{index + 1}</Text>
                                 </View>
                                 <Text style={styles.playerNameText}>
-                                    PlayerName
+                                    {item.name}
                                 </Text>
                                 <Text style={styles.playerScoreText}>
-                                    00
+                                    {item.score}
                                 </Text>
                             </View>
                             }
+                            keyExtractor={(item, index) => index.toString()}
+                            style={styles.flatListStyle}
                         />
                     </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Text style={styles.headerText}>
-                        Button
-                    </Text>
-                </View>
+                {this.getButton()}
             </View>
         );
     }
@@ -78,36 +144,49 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
+        marginBottom: 20,
         // backgroundColor: 'green',
         
     },
     listContainer: {
         flex: 6,
-        height: 500,
         width: '80%',
         marginBottom: 15,
+        // borderColor: 'white',
+        borderRadius: 10,
+        //justifyContent: 'space-around'
+
+    },
+    flatListStyle: {
+        width: '100%',
         backgroundColor: 'white',
         borderColor: 'white',
         borderWidth: 2,
         borderRadius: 10,
-        justifyContent: 'space-around'
-
+        // justifyContent: 'space-around',
+        flexGrow: 0,
     },
     buttonContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 200,
+        width: 220,
         height: 40,
-        marginBottom: 10,
-        backgroundColor: 'white',
+        marginBottom: 25,
+        backgroundColor: 'lightgrey',
         borderColor: 'white',
-        borderWidth: 2,
+        borderWidth: 4,
         borderRadius: 10,
     },
     headerText: {
         color: 'white',
         fontSize: 50,
+        fontFamily: 'Futura',
+        // fontFamily: 'Bangers',
+    },
+    subHeaderText: {
+        color: 'white',
+        fontSize: 20,
         fontFamily: 'Futura',
         // fontFamily: 'Bangers',
     },
@@ -142,16 +221,18 @@ const styles = StyleSheet.create({
     },
     playerNameText: {
         fontSize: 24,
-        marginRight: 60,
+        // marginRight: 60,
+        width: '62%'
     },
     playerScoreText: {
-        fontSize: 30
+        fontSize: 30,
+        fontWeight: 'bold'
     },
     buttonText: {
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'Futura',
         color: 'black',
-        fontSize: 25,
+        fontSize: 40,
     }
 })
