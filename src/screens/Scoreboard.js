@@ -90,7 +90,17 @@ export default class Scoreboard extends Component {
       }
     }
 
+    getPlace(data, num){
+        let scores = []
+        for(i = 0; i < data.length; i++){
+            scores.push(data[i].score)
+        }
+        scores.filter((item, index) => scores.indexOf(item) == index)
+        return scores.indexOf(num)+1
+    }
+
     render() {
+        const DATA = this.state.activePlayers.slice().sort(compareValues)
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -104,11 +114,11 @@ export default class Scoreboard extends Component {
                 <View style={styles.listContainer}>
                     <View style={styles.listContent}>
                         <FlatList
-                            data={this.state.activePlayers.slice().sort(compareValues)}
+                            data={DATA}
                             renderItem={({item, index}) =>
                             <View style={styles.listItem}>
                                 <View style={styles.numberBox} backgroundColor = {item.color}>
-                                    <Text style={styles.numberBoxText}>{index + 1}</Text>
+                                    <Text style={styles.numberBoxText}>{this.getPlace(DATA, item.score)}</Text>
                                 </View>
                                 <Text style={styles.playerNameText}>
                                     {item.name}
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
         width: 300,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 30,
         marginBottom: 20,
         // backgroundColor: 'green',
         
