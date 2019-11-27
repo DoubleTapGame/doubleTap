@@ -11,7 +11,7 @@ class ReadyUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matchup: this.props.navigation.getParam('turnOrder',[[0,1]]).pop(),
+      matchup: [0,1],
       timer: 2,
       width: '20%',
       player1ready: false,
@@ -20,7 +20,26 @@ class ReadyUp extends React.Component {
   }
 
   componentDidMount(){
-    const intervalID = setInterval(() => {
+    this.willBlurSubscription = this.props.navigation.addListener(
+      'willBlur',
+      payload => {
+        console.log('willBlur', payload);
+        this.setState({
+          matchup: [0,1],
+          timer: 2,
+          width: '20%',
+          player1ready: false,
+          player2ready: false,
+        });
+      }
+    );
+
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        console.debug('willFocus', payload);
+        this.setState({matchup: this.props.navigation.getParam('turnOrder',[[0,1]]).pop()})
+        const intervalID = setInterval(() => {
         if(this.state.timer >= 1){
           this.setState(prevState => {return { timer: prevState.timer - 1 };});
         }
@@ -28,20 +47,24 @@ class ReadyUp extends React.Component {
           this.setState({ width: "80%"})
           clearInterval(intervalID);
         }
-      }, 1000);
+        }, 1000);
+      }
+    );
   }
 
   componentDidUpdate(){
-    console.log('cDU P1: '+this.state.player1ready)
-    console.log('cDU P2: '+this.state.player2ready)
     if(this.state.player1ready && this.state.player2ready){
-      console.log('both players ready')
       this.props.navigation.navigate('RapidTap', {
         activePlayers: this.props.navigation.getParam('activePlayers'),
         matchup: this.state.matchup,
         turnOrder: this.props.navigation.getParam('turnOrder'),
       })
     }
+  }
+
+  componentWillUnmount(){
+    this.willBlurSubscription.remove();
+    this.willFocusSubscription.remove();
   }
 
   getViewStyle(num){
