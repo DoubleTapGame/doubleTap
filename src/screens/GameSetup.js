@@ -28,7 +28,7 @@ class GameSetup extends Component {
   
   componentDidMount(){
     this.setState({activePlayers: [
-      {color: 'crimson', name: 'Player 1', score: 0},
+      {color: '#e83559', name: 'Player 1', score: 0},
       {color: 'cornflowerblue', name: 'Player 2', score: 0},
     ]})
   }
