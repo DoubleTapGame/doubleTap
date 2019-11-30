@@ -2,6 +2,16 @@ import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import HelpModal from '../components/HelpModal.js'
 
+const GAMELIST = [
+  'RapidTap',
+  'QuickDraw',
+]
+
+const GAMETITLES = [
+  'Rapid Tap',
+  'Quick Draw',
+]
+
 class ReadyUp extends React.Component {
   
   static navigationOptions = {
@@ -11,12 +21,16 @@ class ReadyUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      game: 'RapidTap',
       matchup: [0,1],
-      timer: 2,
       width: '20%',
       player1ready: false,
       player2ready: false,
     };
+  }
+
+  sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 
   componentDidMount(){
@@ -25,8 +39,8 @@ class ReadyUp extends React.Component {
       payload => {
         console.log('willBlur', payload);
         this.setState({
+          game: 'RapidTap',
           matchup: [0,1],
-          timer: 2,
           width: '20%',
           player1ready: false,
           player2ready: false,
@@ -39,22 +53,17 @@ class ReadyUp extends React.Component {
       payload => {
         console.debug('willFocus', payload);
         this.setState({matchup: this.props.navigation.getParam('turnOrder',[[0,1]]).pop()})
-        const intervalID = setInterval(() => {
-        if(this.state.timer >= 1){
-          this.setState(prevState => {return { timer: prevState.timer - 1 };});
-        }
-        if(this.state.timer === 0){
+        this.setState({game: Math.floor(Math.random() * GAMELIST.length)})
+        this.sleep(2000).then(() => {
           this.setState({ width: "80%"})
-          clearInterval(intervalID);
-        }
-        }, 1000);
+        })
       }
     );
   }
 
   componentDidUpdate(){
     if(this.state.player1ready && this.state.player2ready){
-      this.props.navigation.navigate('RapidTap', {
+      this.props.navigation.navigate(GAMELIST[this.state.game], {
         activePlayers: this.props.navigation.getParam('activePlayers'),
         matchup: this.state.matchup,
         turnOrder: this.props.navigation.getParam('turnOrder'),
@@ -103,8 +112,10 @@ class ReadyUp extends React.Component {
       width: this.state.width
     };
     if(this.state.width==="80%"){
+      let title = GAMETITLES[this.state.game]
+      console.log("ope "+title)
       return (
-        <Text style={textStyle}>Rapid Tap!</Text>
+        <Text style={textStyle}>{title}</Text>
       )
     }
     else{
@@ -113,10 +124,10 @@ class ReadyUp extends React.Component {
   }
 
   toggleReadyStatus(num){
-    if(num === 1 && this.state.timer === 0){
+    if(num === 1 && this.state.width === "80%"){
       this.setState(prevState => ({player1ready: !prevState.player1ready }))
     }
-    if(num === 2 && this.state.timer === 0){
+    if(num === 2 && this.state.width === "80%"){
       this.setState(prevState => ({player2ready: !prevState.player2ready }))
     }
   }
@@ -128,7 +139,7 @@ class ReadyUp extends React.Component {
   }
 
   getReadyText(num){
-    if(this.state.timer > 0) {return ''}
+    if(this.state.width != "80%") {return ''}
     else if(num===1){
       if(this.state.player1ready){return 'Ready!'}
       else{return '(Tap to ready up!)'}
