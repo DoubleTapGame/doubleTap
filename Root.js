@@ -11,6 +11,7 @@ import FinalResultsScreen from './src/screens/FinalResults.js';
 
 //import game screens here
 import RapidTapScreen from './src/screens/Games/RapidTap.js';
+import QuickDrawScreen from './src/screens/Games/QuickDraw.js';
 
 const RootStack = createStackNavigator(
     {
@@ -21,6 +22,7 @@ const RootStack = createStackNavigator(
         FinalResults: FinalResultsScreen,
 
         RapidTap: RapidTapScreen,
+        QuickDraw: QuickDrawScreen,
     },
     {
         initialRouteName: "Home"
