@@ -62,7 +62,9 @@ class QuickDraw extends React.Component {
     }
     else if( ((p1 < p2 && (p1 > 0)) || p2 < 0) && this.state.gameStart && this.state.startTime > 0){
       this.setState({gameStart: false})
-      this.setState({helpText: 'Player 1 wins!'})
+      let players = this.props.navigation.getParam('activePlayers')
+      let matchup = this.props.navigation.getParam('matchup')
+      this.setState({helpText: players[matchup[0]].name+' wins!'})
       this.setState(prev => { return {player1score: prev.player1score + 1}})
       this.sleep(3000).then(() => {
         this.resetRound()
@@ -70,7 +72,9 @@ class QuickDraw extends React.Component {
     }
     else if( ((p2 < p1 && (p2 > 0)) || p1 < 0) && this.state.gameStart && this.state.startTime > 0){
       this.setState({gameStart: false})
-      this.setState({helpText: 'Player 2 wins!'})
+      let players = this.props.navigation.getParam('activePlayers')
+      let matchup = this.props.navigation.getParam('matchup')
+      this.setState({helpText: players[matchup[1]].name+' wins!'})
       this.setState(prev => { return {player2score: prev.player2score + 1}})
       this.sleep(3000).then(() => {
         this.resetRound()
@@ -112,10 +116,24 @@ class QuickDraw extends React.Component {
 
   resetRound(){
     if(this.state.player1score === 2){
-      //p1 wins
+      console.log('player one wins')
+      this.sleep(2000).then(() => {
+        this.props.navigation.navigate('Scoreboard', {
+          activePlayers: this.props.navigation.getParam('activePlayers'),
+          turnOrder: this.props.navigation.getParam('turnOrder'),
+          winner: this.props.navigation.getParam('matchup')[0]
+        })
+      })
     }
     else if(this.state.player2score === 2){
-      //p2 wins
+      console.log('player one wins')
+      this.sleep(2000).then(() => {
+        this.props.navigation.navigate('Scoreboard', {
+          activePlayers: this.props.navigation.getParam('activePlayers'),
+          turnOrder: this.props.navigation.getParam('turnOrder'),
+          winner: this.props.navigation.getParam('matchup')[1]
+        })
+      })
     }
     else {
       this.setState({startTime: 0})
@@ -246,12 +264,40 @@ class QuickDraw extends React.Component {
     }
   }
 
+  getBoxStyle(num){
+    let players = this.props.navigation.getParam('activePlayers')
+    let matchup = this.props.navigation.getParam('matchup')
+
+    if(num===1){ return ({
+      flexDirection: 'row',
+      width: '100%',
+      height: 50,
+      backgroundColor: players[matchup[0]].color,
+      borderColor: 'black',
+      borderTopWidth: 2,
+      alignItems: 'center',
+      justifyContent: 'space-between'
+      })
+    }
+    else{ return ({
+      flexDirection: 'row',
+      width: '100%',
+      height: 50,
+      backgroundColor: players[matchup[1]].color,
+      borderColor: 'black',
+      borderTopWidth: 2,
+      alignItems: 'center',
+      justifyContent: 'space-between'
+      })
+    }
+  }
+
   render() {
       return (
         <View style={{flex: 1}}>
           <TouchableHighlight style={{flex: 1}} onPress={() => this.playerTouch(2)}>
             <View style={this.getViewStyle(2)}>
-              <View style={styles.infoBox}>
+              <View style={this.getBoxStyle(2)}>
                 <Text style={styles.infoText}>
                   {this.getReactionTime(2, true)}
                 </Text>
@@ -274,7 +320,7 @@ class QuickDraw extends React.Component {
 
           <TouchableHighlight style={{flex: 1}} onPress={() => this.playerTouch(1)}>
             <View style={this.getViewStyle(1)}>
-              <View style={styles.infoBox}>
+              <View style={this.getBoxStyle(1)}>
                 <Text style={styles.infoText}>
                   {this.getReactionTime(1, true)}
                 </Text>
@@ -310,16 +356,6 @@ const styles = StyleSheet.create ({
       fontSize: 34,
       marginBottom: 50,
       paddingHorizontal: 25
-    },
-    infoBox: {
-      flexDirection: 'row',
-      width: '100%',
-      height: 50,
-      backgroundColor: 'cornflowerblue',
-      borderColor: 'black',
-      borderTopWidth: 2,
-      alignItems: 'center',
-      justifyContent: 'space-between'
     },
     infoText: {
       fontSize: 24,
