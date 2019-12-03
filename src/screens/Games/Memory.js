@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import { Triangle } from 'react-native-shapes';
+import { Chevron, Heart, Triangle } from 'react-native-shapes';
 
 class Memory extends React.Component {
 
@@ -138,7 +138,10 @@ class Memory extends React.Component {
                             <View style={styles.boxSetContainer}>
                                 <View style={styles.boxSpace}>
                                     {/* <Text style={styles.shape}>Shape</Text> */}
-                                    <Triangle style={styles.shape}/>
+                                    <Triangle 
+                                        style={styles.shape}
+                                        size={4}
+                                    />
                                 </View>
                                 <View style={styles.boxSpace}>
                                     <Text style={styles.shape}>Shape</Text>
