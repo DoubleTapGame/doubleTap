@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  Platform,
   StyleSheet,
   Text,
   View,
-  TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback,
+  TouchableHighlight,
 } from 'react-native';
 
 export default class Home extends Component {
@@ -41,9 +39,8 @@ const styles = StyleSheet.create(
     {
       color: 'white',
       marginBottom: 200,
-      //fontFamily: Bangers,
-      fontSize: 90,
-      fontFamily: 'Futura-Medium',
+      fontFamily: 'Bangers',
+      fontSize: 120,
       textAlign:'center',
     },
     ButtonBox:
@@ -57,8 +54,8 @@ const styles = StyleSheet.create(
     },
     CustomButton: 
     {
-      fontSize: 30,
-      fontFamily: 'Futura',
+      fontSize: 35,
+      fontFamily: 'Bangers',
     }
     
    

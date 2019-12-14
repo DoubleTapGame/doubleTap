@@ -119,9 +119,11 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 32,
         textAlign: 'center',
+        fontFamily: 'Carter One'
     },
     subText: {
         fontSize: 20,
         textAlign: 'center',
+        fontFamily: 'Carter One'
     },
 });

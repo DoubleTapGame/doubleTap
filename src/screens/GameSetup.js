@@ -61,7 +61,8 @@ class GameSetup extends Component {
     else{
       return(
         <Button title="Play!"color="purple"
-            disabled={true}/>
+            disabled={true}
+            />
       )
     }
   }
@@ -161,18 +162,21 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   heading1: {
-    fontSize: 48,
+    fontSize: 65,
+    fontFamily: 'Bangers',
     color: '#000000',
     textAlign: 'center',
     margin: 5,
 	},
 	heading2: {
     fontSize: 28,
+    fontFamily: 'Carter One',
     color: '#7e0fa6',
     textAlign: 'center',
   },
   heading3: {
     fontSize: 24,
+    fontFamily: 'Roboto Slab',
     color: '#3d3d3d',
     textAlign: 'center',
     margin: 5,

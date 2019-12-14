@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
       padding: 5,
       marginBottom: 2,
       fontSize: 26,
+      fontFamily: 'Roboto Slab',
       borderBottomColor: '#000',
       borderBottomWidth: 2 
     },
