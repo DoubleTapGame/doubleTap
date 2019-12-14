@@ -91,7 +91,7 @@ class RapidTap extends React.Component {
     if(number === 1){
       return(
         <View>
-          <Text style={{fontSize: 100 + this.state.player1count}}>
+          <Text style={{fontSize: 100 + this.state.player1count, fontFamily: 'Roboto Slab'}}>
             {this.state.player1count}
           </Text>
         </View>
@@ -100,7 +100,7 @@ class RapidTap extends React.Component {
     else{
       return(
         <View>
-          <Text style={{fontSize: 100 + this.state.player2count}}>
+          <Text style={{fontSize: 100 + this.state.player2count, fontFamily: 'Roboto Slab',}}>
             {this.state.player2count}
           </Text>
         </View>
@@ -152,7 +152,7 @@ class RapidTap extends React.Component {
         <View style={{flex: 1}}>
           <TouchableHighlight style={{flex: 1}} onPress={() => this.incrementCount(2)}>
             <View style={this.getViewStyle(2)}>
-              <Text style={{fontSize: 30}}>{this.getHint(2)}</Text>
+              <Text style={{fontSize: 30, fontFamily: 'Bangers',}}>{this.getHint(2)}</Text>
               <View>
                 {this.getScoreText(2)}
               </View>
@@ -166,7 +166,7 @@ class RapidTap extends React.Component {
 
           <TouchableHighlight style={{flex: 1}} onPress={() => this.incrementCount(1)}>
             <View style={this.getViewStyle(1)}>
-              <Text style={{fontSize: 30}}>{this.getHint(1)}</Text>
+              <Text style={{fontSize: 30, fontFamily: 'Bangers',}}>{this.getHint(1)}</Text>
               <View style={{justifyContent: 'center'}}>
                 {this.getScoreText(1)}
               </View>

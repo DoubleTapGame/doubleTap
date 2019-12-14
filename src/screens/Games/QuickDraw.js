@@ -354,12 +354,14 @@ const styles = StyleSheet.create ({
     instructions: {
       textAlign: 'center',
       fontSize: 34,
+      fontFamily: 'Bangers',
       marginBottom: 50,
       paddingHorizontal: 25
     },
     infoText: {
       fontSize: 24,
       marginHorizontal: 10,
+      fontFamily: 'Roboto Slab',
     },
     emptyBubble: {
       width: 15,

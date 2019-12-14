@@ -1,9 +1,5 @@
 //scoreboard
-//things to do still: add timer for showing this screen in between games,
-//add crown for #1 spot
-//get player info to show in the list items (color, name, score)
 import React, { Component } from 'react';
-// import fontFamily from '../../assets';
 import {
     StyleSheet,
     Text,
@@ -153,18 +149,15 @@ const styles = StyleSheet.create({
         width: 300,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 40,
         marginBottom: 20,
-        // backgroundColor: 'green',
         
     },
     listContainer: {
         flex: 6,
         width: '80%',
         marginBottom: 15,
-        // borderColor: 'white',
         borderRadius: 10,
-        //justifyContent: 'space-around'
 
     },
     flatListStyle: {
@@ -173,7 +166,6 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 2,
         borderRadius: 10,
-        // justifyContent: 'space-around',
         flexGrow: 0,
     },
     buttonContainer: {
@@ -190,26 +182,25 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: 'white',
-        fontSize: 50,
+        fontSize: 65,
         fontFamily: 'Futura',
-        // fontFamily: 'Bangers',
+        fontFamily: 'Bangers',
     },
     subHeaderText: {
         color: 'white',
         fontSize: 20,
         fontFamily: 'Futura',
-        // fontFamily: 'Bangers',
+        fontFamily: 'Bangers',
     },
     listContent: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         color: 'black',
-        fontFamily: 'Futura',
+        fontFamily: 'Roboto Slab',
     },
     listItem: {
         flexDirection: 'row',
-        // justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 5,
         paddingVertical: 10
@@ -231,7 +222,7 @@ const styles = StyleSheet.create({
     },
     playerNameText: {
         fontSize: 24,
-        // marginRight: 60,
+        fontFamily: 'Roboto Slab',
         width: '62%'
     },
     playerScoreText: {
@@ -241,7 +232,7 @@ const styles = StyleSheet.create({
     buttonText: {
         justifyContent: 'center',
         alignItems: 'center',
-        fontFamily: 'Futura',
+        fontFamily: 'Bangers',
         color: 'black',
         fontSize: 40,
     }

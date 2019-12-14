@@ -109,7 +109,8 @@ class ReadyUp extends React.Component {
       fontSize: 32,
       borderColor: 'black',
       borderBottomWidth: 2,
-      width: this.state.width
+      width: this.state.width,
+      fontFamily: 'Bangers',
     };
     if(this.state.width==="80%"){
       let title = GAMETITLES[this.state.game]
@@ -180,12 +181,14 @@ const styles = StyleSheet.create ({
       textAlign: 'center',
       textAlignVertical: 'center',
       fontSize: 52,
+      fontFamily: 'Roboto Slab',
     },
     readyText: {
       flex: 1,
       textAlign: 'center',
       textAlignVertical: 'center',
       fontSize: 30,
+      fontFamily: 'Bangers',
     },
 })
 export default ReadyUp;

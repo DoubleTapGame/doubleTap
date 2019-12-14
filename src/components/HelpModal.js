@@ -106,17 +106,20 @@ const styles = StyleSheet.create ({
     },
     gameText: {
       fontSize: 30,
+      fontFamily: 'Bangers',
       alignSelf: 'center',
       marginTop: 20
     },
     title: {
-      fontSize: 40,
+      fontSize: 50,
+      fontFamily: 'Bangers',
       fontWeight: 'bold',
       alignSelf: 'center',
       marginVertical: 25,
     },
     body: {
       fontSize: 28,
+      fontFamily: 'Roboto Slab',
       marginHorizontal: 20,
       alignSelf: 'center'
     },
