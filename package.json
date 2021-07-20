@@ -13,7 +13,7 @@
     "@react-native-community/async-storage": "^1.6.3",
     "matter-js": "^0.14.2",
     "react": "16.9.0",
-    "react-native": "0.61.2",
+    "react-native": "0.62.3",
     "react-native-game-engine": "^0.10.1",
     "react-native-gesture-handler": "^1.4.1",
     "react-navigation": "^3.13.0",
